@@ -1,0 +1,219 @@
+* {
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+  box-sizing: border-box;
+}
+
+body {
+  background: #080808;
+  color: #fff;
+}
+
+#header {
+  height: 100vh;
+  width: 100%;
+  background-size: cover;
+  background-position: center;
+  background-image: url('Assets/Hero_1.png');
+
+  .container {
+    padding: 10px 10%;
+
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 24px 0;
+
+      .my_logo {
+        width: 100px;
+        height: auto;
+        margin-right: 40px;
+        display: block;
+      }
+
+      ul {
+        display: flex;
+        align-items: center;
+        margin: 0;
+        padding: 0;
+
+        .Resume{
+          background-color: #0eaec6; 
+          color: white;
+          padding: 15px 30px;
+          border: none;
+          border-radius: 8px;
+          cursor: pointer;
+          transition: background-color 0.3s ease transform 0.2s ease;
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .Resume:hover {
+          background-color: #000000;
+          transform: translateY(-2px);
+        }
+        .Resume:active {
+          background-color: #0eaec6;
+          transform: translateY();
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        li {
+          list-style: none;
+          margin: 0 20px;
+
+          a {
+            color: #f7f7f7;
+            text-decoration: none;
+            font-size: 18px;
+            position: relative;
+
+            &::after {
+              content: '';
+              width: 0;
+              height: 2px;
+              background: #d7d7d7;
+              position: absolute;
+              left: 0;
+              bottom: -6px;
+              transition: 0.5s;
+            }
+
+            &:hover::after {
+              width: 100%;
+            }
+          }
+        }
+      }
+    }
+
+    .header-text {
+      font-size: 30px;
+      margin-top: 20%;
+
+      h1 {
+        font-size: 60px;
+        margin-top: 20px;
+      }
+    }
+  }
+}
+
+/* ------------- About Section ------------- */
+
+#about {
+  padding: 80px 0;
+  background: #ababab;
+
+  .container {
+    .row {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+
+      .about-col-1 {
+        flex-basis: 40%;
+
+        img {
+          width: 100%;
+          border-radius: 15px;
+          border-radius: 30%;
+        }
+
+      }
+
+      .about-col-2 {
+        flex-basis: 60%;
+
+        .sub-title {
+          font-size: 60px;
+          font-weight: 500;
+          color: #fff;
+        }
+        .About-Description {
+          text-align: justify;
+        }
+
+      }
+    }
+  }
+}
+
+/* ------------- Services Section ------------- */
+
+#services {
+  padding: 30px 0;
+  .sub-title .service-sub-heading h1{
+        font-size: 24px;
+        font-weight: 600;
+        align-items: center;
+        margin-bottom: 16px;
+        color: #ffd700;
+        letter-spacing: 1px;
+      }
+
+  .services-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-gap: 40px;
+    margin-top: 50px;
+
+    div {
+      background: #181818;
+      border-radius: 18px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+      padding: 32px 24px;
+      color: #fff;
+      transition: transform 0.3s, box-shadow 0.3s;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      min-height: 320px;
+      position: relative;
+      overflow: hidden;
+
+      &:hover {
+        transform: translateY(-10px) scale(1.03);
+        box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+        background: linear-gradient(135deg, #232526 0%, #414345 100%);
+      }
+
+
+      h2 {
+        font-size: 28px;
+        font-weight: 600;
+        margin-bottom: 16px;
+        color: #d1d1d1;
+        letter-spacing: 1px;
+      }
+
+      p {
+        font-size: 16px;
+        margin-bottom: 24px;
+        color: #e0e0e0;
+        line-height: 1.7;
+        flex: 1;
+      }
+
+      a {
+        display: inline-block;
+        padding: 10px 24px;
+        background: #0eaec6;
+        color: #ffffff;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 500;
+        font-size: 15px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+        transition: background 0.2s, color 0.2s;
+
+        &:hover {
+          background: #fff;
+          color: #232526;
+        }
+      }
+    }
+  }
+}
+
