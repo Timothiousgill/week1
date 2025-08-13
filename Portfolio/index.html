@@ -4,119 +4,106 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Timothiour|Portfolio</title>
-    <link rel="stylesheet" href="Style.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/sass.js/0.9.2/sass.min.js" integrity="sha512-mA5b7w9mZvGLWgjIqp9KhWNzkkZ/H3gC4Ua6GOn9m/xl1UF4ghH8GsriKvAYxLsxoKvn6NdebW7kZ6iGB3CGSg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <title>Timothiour | Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
     <div id="header">
         <div class="container">
             <nav>
-                <img src="Assets/my_logo.png" class="my_logo">
-                <ul>
-                    <li><a href="#">Home</a></li>
-                    <li><a href="#">About</a></li>
-                    <li><a href="#">Services</a></li>
-                    <li><a href="#">Contact</a></li>
-                    <button class="Resume">Resume</button>
+                <img src="Assets/my_logo.png" class="my_logo" alt="Timothiour Logo">
+                <div class="menu-toggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <ul id="nav-menu">
+                    <li><a href="#header">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#projects">Projects</a></li>
+                    <li><button class="Resume-btn">Resume</button></li>
                 </ul>
             </nav>
-            <div class="header-text">
+            <div class="header-text fade-in">
                 <p>Welcome to My portfolio</p>
                 <h1>Your one-stop <br>solution for all <br> your needs.</h1>
             </div>
         </div>
-
     </div>
+
     <div id="about">
         <div class="container">
             <div class="row">
-                <div class="about-col-1">
-                    <img src="Assets/Tim.png" alt="">
+                <div class="about-col-1 fade-in">
+                    <img src="Assets/Tim.png" alt="Timothiour Profile Picture">
                 </div>
-                <div class="about-col-2">
+                <div class="about-col-2 fade-in">
                     <h1 class="sub-title">About Me</h1>
-
                     <p class="About-Description">
                         Timothious is a digital and brand designer with a passion for art and technology. Employing
                         various tools, he crafts remarkable, unique creations that captivate online audiences. He
                         thrives as both a digital artist and an enthusiastic programmer.
+                        <br><br>
                         With years of experience in graphic design, web development, and branding, Timothious combines
                         creativity with technical expertise to deliver visually stunning and functional solutions. He
                         enjoys collaborating with clients to bring their visions to life, ensuring every project
                         reflects their unique identity.
+                        <br><br>
                         Whether designing logos, building websites, or developing digital strategies, Timothious is
                         dedicated to continuous learning and innovation. His commitment to excellence and attention to
-                        detail make him a trusted partner for individuals and businesses seeking to elevate
+                        detail make him a trusted partner for individuals and businesses seeking to elevate their digital presence.
                     </p>
                 </div>
-
             </div>
         </div>
     </div>
 
     <div id="services">
         <div class="container">
-            <div class="sub-title">
-                <h1 class="service-sub-heading">My Services</h1>
-                <div class="services-list">
-                    <div>
-                        <h2>Web Developer</h2>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus distinctio iste, atque
-                            assumenda, culpa quisquam id molestias obcaecati dicta iusto commodi ex impedit ducimus
-                            velit eaque veniam consequuntur vel quae quos. Eos eveniet voluptate voluptatem voluptates
-                            accusamus ut fugit optio alias dolor soluta. Ex incidunt, pariatur maiores adipisci
-                            repudiandae impedit?</p>
-                            <a href="">Learn More</a>
-                    </div>
+            <h1 class="service-sub-heading fade-in">My Services</h1>
+            <div class="services-list">
+                <div class="service-card fade-in">
+                    <h2>Web Development</h2>
+                    <p>Creating modern, responsive websites and web applications using cutting-edge technologies. From simple landing pages to complex web platforms, I deliver solutions that are both beautiful and functional.</p>
+                    <a href="#contact">Learn More</a>
+                </div>
 
-                    <div>
-                        <h2>Game Developer</h2>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus distinctio iste, atque
-                            assumenda, culpa quisquam id molestias obcaecati dicta iusto commodi ex impedit ducimus
-                            velit eaque veniam consequuntur vel quae quos. Eos eveniet voluptate voluptatem voluptates
-                            accusamus ut fugit optio alias dolor soluta. Ex incidunt, pariatur maiores adipisci
-                            repudiandae impedit?</p>
-                            <a href="">Learn More</a>
-                    </div>
+                <div class="service-card fade-in">
+                    <h2>Game Development</h2>
+                    <p>Developing engaging and interactive games for various platforms. Whether it's mobile games, web-based games, or desktop applications, I create immersive gaming experiences that captivate users.</p>
+                    <a href="#contact">Learn More</a>
+                </div>
 
-                    <div>
-                        <h2>Mashine Learning</h2>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus distinctio iste, atque
-                            assumenda, culpa quisquam id molestias obcaecati dicta iusto commodi ex impedit ducimus
-                            velit eaque veniam consequuntur vel quae quos. Eos eveniet voluptate voluptatem voluptates
-                            accusamus ut fugit optio alias dolor soluta. Ex incidunt, pariatur maiores adipisci
-                            repudiandae impedit?</p>
-                            <a href="">Learn More</a>
-                    </div>
+                <div class="service-card fade-in">
+                    <h2>Machine Learning</h2>
+                    <p>Implementing AI and machine learning solutions to solve complex problems. From data analysis to predictive modeling, I help businesses leverage the power of artificial intelligence.</p>
+                    <a href="#contact">Learn More</a>
+                </div>
 
-                    <div>
-                        <h2>Graphic Designer</h2>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus distinctio iste, atque
-                            assumenda, culpa quisquam id molestias obcaecati dicta iusto commodi ex impedit ducimus
-                            velit eaque veniam consequuntur vel quae quos. Eos eveniet voluptate voluptatem voluptates
-                            accusamus ut fugit optio alias dolor soluta. Ex incidunt, pariatur maiores adipisci
-                            repudiandae impedit?</p>
-                            <a href="">Learn More</a>
-                    </div>
+                <div class="service-card fade-in">
+                    <h2>Graphic Design</h2>
+                    <p>Creating visually appealing designs for digital and print media. From logos and branding to marketing materials and UI/UX design, I bring creative visions to life with professional quality.</p>
+                    <a href="#contact">Learn More</a>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="Projects">
+    <div id="projects">
         <div class="container">
-            <div class="sub-title">
-                <h1 class="project-sub-heading">My Projects</h1>
-                <div class="project-list">
-            
-
-                </div>
-
+            <h1 class="project-sub-heading fade-in">My Projects</h1>
+            <div class="project-list">
+                <!-- Project cards will be added here -->
             </div>
         </div>
     </div>
 
+    <script src="script.js"></script>
 </body>
 
 </html>
