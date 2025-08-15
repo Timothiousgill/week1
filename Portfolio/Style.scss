@@ -5,6 +5,31 @@
   box-sizing: border-box;
 }
 
+// Mixins
+@mixin button-style($bg-color, $text-color: #fff, $padding: 12px 24px) {
+  background-color: $bg-color;
+  color: $text-color;
+  padding: $padding;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  font-size: 16px;
+  font-weight: 500;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+  }
+}
+
+@mixin flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 body {
   background: #080808;
   color: #fff;
@@ -25,7 +50,7 @@ html {
 #header {
   height: 100vh;
   width: 100%;
-  background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('Assets/Hero_1.png');
+  background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('Assets/Hero_1.png');
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
@@ -85,16 +110,7 @@ html {
     }
 
     .Resume-btn {
-      background-color: #0eaec6;
-      color: white;
-      padding: 12px 24px;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-      font-size: 16px;
-      font-weight: 500;
+      @include button-style(#0eaec6);
 
       &:hover {
         background-color: #0c97ac;
@@ -285,7 +301,7 @@ html {
         left: -100%;
         width: 100%;
         height: 100%;
-        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
         transition: left 0.5s ease;
       }
 
@@ -331,11 +347,124 @@ html {
     }
   }
 
-  .project-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 30px;
-    margin-top: 50px;
+  p {
+    text-align: center;
+    color: #ccc;
+    margin-bottom: 40px;
+    font-size: 16px;
+  }
+
+  // Carousel Container
+  .carousel-container {
+    position: relative;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+
+  .carousel-wrapper {
+    overflow: hidden;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  }
+
+  .project-carousel {
+    display: flex;
+    transition: transform 0.5s ease;
+  }
+
+  .project-card {
+    min-width: 100%;
+    background: #222;
+    position: relative;
+    height: 400px;
+
+    img {
+      width: 100%;
+      height: 250px;
+      object-fit: cover;
+      border-radius: 15px 15px 0 0;
+    }
+
+    .project-content {
+      padding: 20px;
+      height: 150px;
+      @include flex-center;
+      flex-direction: column;
+      text-align: center;
+
+      h3 {
+        font-size: 18px;
+        color: #fff;
+        font-weight: 600;
+        line-height: 1.4;
+      }
+    }
+  }
+
+  // Carousel Navigation
+  .carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    @include button-style(rgba(0, 0, 0, 0.7), #fff, 10px 15px);
+    font-size: 24px;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    z-index: 10;
+
+    &.prev-btn {
+      left: -25px;
+    }
+
+    &.next-btn {
+      right: -25px;
+    }
+
+    &:hover {
+      background-color: #0eaec6;
+    }
+  }
+
+  // Carousel Dots
+  .carousel-dots {
+    @include flex-center;
+    gap: 10px;
+    margin-top: 20px;
+
+    .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #555;
+      cursor: pointer;
+      transition: background 0.3s ease;
+
+      &.active {
+        background: #0eaec6;
+      }
+
+      &:hover {
+        background: #0eaec6;
+      }
+    }
+  }
+
+  // Contact Button
+  .contact-btn-container {
+    @include flex-center;
+    margin-top: 40px;
+  }
+
+  .contact-btn {
+    @include button-style(#0eaec6, #fff, 15px 30px);
+    font-size: 18px;
+    border-radius: 25px;
+
+    &:hover {
+      background-color: #0c97ac;
+    }
   }
 }
 
@@ -389,7 +518,49 @@ html {
   pointer-events: none;
 }
 
-// Responsive Design
+
+// Footer
+.footer {
+  background-color: #1a1a1a;
+  color: #fff;
+  padding: 40px 0 20px 0;
+  text-align: center;
+  width: 100%;
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .footer-top {
+    margin-bottom: 20px;
+
+    .footer-socials {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+
+      a {
+        color: #0eaec6;
+        font-size: 22px;
+        transition: color 0.3s;
+
+        &:hover {
+          color: #14b8cc;
+        }
+      }
+    }
+  }
+
+  .footer-content {
+    font-size: 16px;
+    color: #ccc;
+    margin-top: 10px;
+  }
+}
+
+
+// Responsive 
 @media screen and (max-width: 768px) {
   .container {
     padding: 0 15px;
@@ -397,6 +568,14 @@ html {
 
   .menu-toggle {
     display: flex;
+  }
+
+  #nav-menu {
+    display: none;
+
+    &.active {
+      display: flex;
+    }
   }
 
   #header {
@@ -468,8 +647,34 @@ html {
       font-size: 36px;
     }
 
-    .project-list {
-      grid-template-columns: 1fr;
+    .carousel-container {
+      padding: 10px;
+    }
+
+    .carousel-btn {
+      &.prev-btn {
+        left: -15px;
+      }
+
+      &.next-btn {
+        right: -15px;
+      }
+    }
+
+    .project-card {
+      height: 350px;
+
+      img {
+        height: 200px;
+      }
+
+      .project-content {
+        height: 150px;
+
+        h3 {
+          font-size: 16px;
+        }
+      }
     }
   }
 }
@@ -536,6 +741,20 @@ html {
     .project-sub-heading {
       font-size: 28px;
     }
+
+    .carousel-btn {
+      width: 40px;
+      height: 40px;
+      font-size: 20px;
+
+      &.prev-btn {
+        left: -10px;
+      }
+
+      &.next-btn {
+        right: -10px;
+      }
+    }
   }
 }
 
@@ -570,6 +789,10 @@ html {
   #projects {
     .project-sub-heading {
       font-size: 24px;
+    }
+
+    .carousel-container {
+      padding: 5px;
     }
   }
 }

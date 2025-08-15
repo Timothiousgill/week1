@@ -5,9 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Timothiour | Portfolio</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
 
@@ -26,7 +24,10 @@
                     <li><a href="#about">About</a></li>
                     <li><a href="#services">Services</a></li>
                     <li><a href="#projects">Projects</a></li>
-                    <li><button class="Resume-btn">Resume</button></li>
+                    <li>
+                        <a href="/Assets/docs/Timothious_GIll_Resume.pdf" target="_blank" class="Resume-btn">Resume</a>
+                    </li>
+
                 </ul>
             </nav>
             <div class="header-text fade-in">
@@ -56,7 +57,8 @@
                         <br><br>
                         Whether designing logos, building websites, or developing digital strategies, Timothious is
                         dedicated to continuous learning and innovation. His commitment to excellence and attention to
-                        detail make him a trusted partner for individuals and businesses seeking to elevate their digital presence.
+                        detail make him a trusted partner for individuals and businesses seeking to elevate their
+                        digital presence.
                     </p>
                 </div>
             </div>
@@ -69,25 +71,32 @@
             <div class="services-list">
                 <div class="service-card fade-in">
                     <h2>Web Development</h2>
-                    <p>Creating modern, responsive websites and web applications using cutting-edge technologies. From simple landing pages to complex web platforms, I deliver solutions that are both beautiful and functional.</p>
+                    <p>Creating modern, responsive websites and web applications using cutting-edge technologies. From
+                        simple landing pages to complex web platforms, I deliver solutions that are both beautiful and
+                        functional</p>
                     <a href="#contact">Learn More</a>
                 </div>
 
                 <div class="service-card fade-in">
                     <h2>Game Development</h2>
-                    <p>Developing engaging and interactive games for various platforms. Whether it's mobile games, web-based games, or desktop applications, I create immersive gaming experiences that captivate users.</p>
+                    <p>Developing engaging and interactive games for various platforms. Whether it's mobile games,
+                        web-based games, or desktop applications, I create immersive gaming experiences that captivate
+                        users.</p>
                     <a href="#contact">Learn More</a>
                 </div>
 
                 <div class="service-card fade-in">
                     <h2>Machine Learning</h2>
-                    <p>Implementing AI and machine learning solutions to solve complex problems. From data analysis to predictive modeling, I help businesses leverage the power of artificial intelligence.</p>
+                    <p>Implementing AI and machine learning solutions to solve complex problems. From data analysis to
+                        predictive modeling, I help businesses leverage the power of artificial intelligence.</p>
                     <a href="#contact">Learn More</a>
                 </div>
 
                 <div class="service-card fade-in">
                     <h2>Graphic Design</h2>
-                    <p>Creating visually appealing designs for digital and print media. From logos and branding to marketing materials and UI/UX design, I bring creative visions to life with professional quality.</p>
+                    <p>Creating visually appealing designs for digital and print media. From logos and branding to
+                        marketing materials and UI/UX design, I bring creative visions to life with professional
+                        quality.</p>
                     <a href="#contact">Learn More</a>
                 </div>
             </div>
@@ -97,11 +106,45 @@
     <div id="projects">
         <div class="container">
             <h1 class="project-sub-heading fade-in">My Projects</h1>
-            <div class="project-list">
-                <!-- Project cards will be added here -->
+            <p>See My Latest Project</p>
+            <div class="carousel-container">
+                <div class="carousel-wrapper">
+                    <div class="project-carousel" id="projectCarousel">
+                        <!-- Project cards -->
+                    </div>
+                </div>
+
+                <button class="carousel-btn prev-btn" onclick="moveCarousel(-1)">&lt;</button>
+                <button class="carousel-btn next-btn" onclick="moveCarousel(1)">&gt;</button>
+
+                <div class="carousel-dots" id="carouselDots">
+                    <!-- Dots -->
+                </div>
+            </div>
+            <div class="contact-btn-container">
+                <a id="contact-link" href="mailto:timothious.gill@ili.digital">
+                    <button class="contact-btn">Contact me for more</button>
+                </a>
             </div>
         </div>
     </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-top">
+                <div class="footer-socials">
+                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" aria-label="Pinterest"><i class="fab fa-pinterest-p"></i></a>
+                    <a href="https://www.instagram.com/timothious.official/" aria-label="Instagram"><i
+                            class="fab fa-instagram"></i></a>
+                    <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+            <div class="footer-content">
+                <p>&copy; 2025 Timothious. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
 
     <script src="script.js"></script>
 </body>

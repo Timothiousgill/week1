@@ -1,0 +1,28 @@
+
+[
+    { 
+      "title": "Eye Tracking WheelChair - IOT, Machine Learning, React, Python, Node js", 
+      "image": "Assets/fyp.jpg" 
+    },
+    { 
+      "title": "Face Detection - Python, Deep Learning", 
+      "image": "https://miro.medium.com/v2/resize:fit:1200/1*a6kXOpZQ4abIk0EfIkKOpw.jpeg" 
+    },
+    { 
+      "title": "Facial Attendance Monitoring System - TensorFlow, Deep Learning", 
+      "image": "Assets/attandance.png" 
+    },
+    { 
+      "title": "Two Factor Authentication Security GUI in Windows - linux, (GUI in Python)", 
+      "image": "Assets/1.png" 
+    },
+    { 
+      "title": "The Hunter - FPS Game - GD Script and C# using Godot Game Engine", 
+      "image": "Assets/the_hunter_fps_game_by_Timothious.png" 
+    },
+    { 
+      "title": "Arthub Website - Wordpress", 
+      "image": "Assets/arthub.png" 
+    }
+
+]
