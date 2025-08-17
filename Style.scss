@@ -7,6 +7,10 @@ $text-light: #fff;
 $text-muted: #ccc;
 $text-gray: #555;
 $accent-blue: #14b8cc;
+$gradient-start: #0eaec6;
+$gradient-end: #14b8cc;
+$skill-bg: #262626;
+$skill-progress-bg: linear-gradient(90deg, $gradient-start, $gradient-end);
 
 // Mixins
 @mixin button-style($bg-color, $text-color: #fff, $padding: 12px 24px) {
@@ -51,6 +55,13 @@ $accent-blue: #14b8cc;
     left: 50%;
     transform: translateX(-50%);
   }
+}
+
+@mixin glassmorphism {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
 }
 
 // Base Styles
@@ -134,11 +145,6 @@ html {
             &::after {
               width: 100%;
             }
-          }
-
-          &:focus {
-            outline: 2px solid $primary-color;
-            outline-offset: 2px;
           }
         }
       }
@@ -279,28 +285,60 @@ html {
   }
 }
 
-// Services Section
-#services {
-  padding: 80px 0;
+// Skills Section
+#skills {
+  padding: 100px 0;
   background: $bg-dark;
+  position: relative;
+  overflow: hidden;
 
-  .service-sub-heading {
+  // Background Effects
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 20% 80%, rgba(14, 174, 198, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(20, 184, 204, 0.1) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .container {
+    position: relative;
+    z-index: 2;
+  }
+
+  .skills-heading {
     @include section-heading;
+    background: linear-gradient(135deg, $gradient-start, $gradient-end);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 20px;
   }
 
-  .services-list {
+  .skills-subtitle {
+    text-align: center;
+    color: $text-muted;
+    font-size: 18px;
+    margin-bottom: 60px;
+    font-weight: 300;
+  }
+
+  .skills-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 30px;
-    margin-top: 50px;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 40px;
+    margin-bottom: 80px;
   }
 
-  .service-card {
-    background: $bg-secondary;
-    border-radius: 15px;
+  .skill-category {
+    @include glassmorphism;
     padding: 30px;
     transition: all 0.3s ease;
-    border: 1px solid #333;
     position: relative;
     overflow: hidden;
 
@@ -308,80 +346,206 @@ html {
       content: '';
       position: absolute;
       top: 0;
-      left: 0;
+      left: -100%;
       width: 100%;
-      height: 4px;
-      background: linear-gradient(90deg, $primary-color, $accent-blue);
-      transform: scaleX(0);
-      transition: transform 0.3s ease;
+      height: 2px;
+      background: $skill-progress-bg;
+      transition: left 0.5s ease;
     }
 
     &:hover {
       transform: translateY(-10px);
-      box-shadow: 0 15px 40px rgba(14, 174, 198, 0.15);
-      background: #222;
-
+      box-shadow: 0 20px 40px rgba(14, 174, 198, 0.2);
+      
       &::before {
-        transform: scaleX(1);
-      }
-
-      h2 {
-        color: $primary-color;
+        left: 0;
       }
     }
 
-    h2 {
-      font-size: 24px;
-      font-weight: 600;
-      color: $text-light;
-      margin-bottom: 15px;
-      transition: color 0.3s ease;
-    }
-
-    p {
-      font-size: 15px;
-      color: $text-muted;
-      line-height: 1.7;
+    .category-header {
+      display: flex;
+      align-items: center;
       margin-bottom: 25px;
-    }
+      gap: 15px;
 
-    a {
-      display: inline-block;
-      padding: 12px 25px;
-      background: $primary-color;
-      color: $text-light;
-      text-decoration: none;
-      border-radius: 25px;
-      font-weight: 500;
-      transition: all 0.3s ease;
-      position: relative;
-      overflow: hidden;
+      .category-icon {
+        width: 50px;
+        height: 50px;
+        border-radius: 12px;
+        background: $skill-progress-bg;
+        @include flex-center;
+        box-shadow: 0 4px 15px rgba(14, 174, 198, 0.3);
 
-      &::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: -100%;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-        transition: left 0.5s ease;
-      }
-
-      &:hover {
-        background: $primary-hover;
-        transform: scale(1.05);
-
-        &::before {
-          left: 100%;
+        i {
+          font-size: 22px;
+          color: $text-light;
         }
       }
 
-      &:focus {
-        outline: 2px solid $primary-color;
-        outline-offset: 2px;
+      h3 {
+        font-size: 20px;
+        font-weight: 600;
+        color: $text-light;
+        margin: 0;
       }
     }
+
+    .skills-list {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .skill-item {
+      transition: all 0.3s ease;
+
+      &:hover {
+        transform: translateX(10px);
+      }
+
+      .skill-info {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 8px;
+
+        .skill-name {
+          font-size: 14px;
+          font-weight: 500;
+          color: $text-light;
+        }
+
+        .skill-percentage {
+          font-size: 12px;
+          font-weight: 600;
+          color: $primary-color;
+        }
+      }
+
+      .skill-bar {
+        height: 6px;
+        background: $skill-bg;
+        border-radius: 10px;
+        overflow: hidden;
+        position: relative;
+
+        .skill-progress {
+          height: 100%;
+          background: $skill-progress-bg;
+          border-radius: 10px;
+          width: 0;
+          transition: width 1.5s ease;
+          position: relative;
+          
+          &::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 20px;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3));
+            animation: shimmer 2s infinite;
+          }
+        }
+      }
+
+      &.animate {
+        .skill-progress {
+          width: var(--width);
+        }
+      }
+    }
+  }
+
+  // Skills Summary
+  .skills-summary {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 30px;
+    margin-top: 60px;
+
+    .summary-item {
+      @include glassmorphism;
+      padding: 40px 20px;
+      text-align: center;
+      transition: all 0.3s ease;
+      position: relative;
+
+      &:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 30px rgba(14, 174, 198, 0.2);
+      }
+
+      .summary-number {
+        font-size: 48px;
+        font-weight: 700;
+        background: $skill-progress-bg;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: 10px;
+        position: relative;
+        display: inline-block;
+
+        .percentage-sign {
+          font-size: 24px;
+          margin-left: 2px;
+        }
+      }
+
+      .summary-label {
+        font-size: 14px;
+        color: $text-muted;
+        font-weight: 400;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+
+      .percentage-sign {
+        font-size: 24px;
+        color: $primary-color;
+        font-weight: 700;
+        margin-left: 2px;
+      }
+    }
+  }
+}
+
+// Keyframes
+@keyframes shimmer {
+  0% {
+    transform: translateX(-20px);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(20px);
+    opacity: 0;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes countUp {
+  from {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
   }
 }
 
@@ -454,12 +618,20 @@ html {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    @include button-style(rgba(0, 0, 0, 0.7), $text-light, 10px 15px);
-    font-size: 24px;
+    background: $primary-color;
+    color: $text-light;
+    font-size: 22px;
+    border: none;
     border-radius: 50%;
     width: 50px;
     height: 50px;
     z-index: 10;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(14, 174, 198, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
     &.prev-btn {
       left: -25px;
@@ -470,7 +642,9 @@ html {
     }
 
     &:hover {
-      background-color: $primary-color;
+      background: $primary-hover;
+      transform: translateY(-50%) scale(1.1);
+      box-shadow: 0 8px 18px rgba(14, 174, 198, 0.4);
     }
   }
 
@@ -661,25 +835,6 @@ html {
           transform: translateY(-3px) scale(1.05);
         }
       }
-
-      // Close button in mobile menu
-      &::after {
-        content: '×';
-        position: fixed;
-        top: 30px;
-        right: 30px;
-        font-size: 40px;
-        color: $text-light;
-        cursor: pointer;
-        z-index: 1002;
-        display: none;
-        transition: all 0.3s ease;
-
-        &:hover {
-          color: $primary-color;
-          transform: rotate(90deg);
-        }
-      }
     }
 
     .header-text {
@@ -715,13 +870,48 @@ html {
     }
   }
 
-  #services {
-    .service-sub-heading {
+  #skills {
+    padding: 60px 0;
+
+    .skills-heading {
       font-size: 36px;
     }
 
-    .services-list {
+    .skills-grid {
       grid-template-columns: 1fr;
+      gap: 25px;
+    }
+
+    .skill-category {
+      padding: 20px;
+
+      .category-header {
+        .category-icon {
+          width: 40px;
+          height: 40px;
+
+          i {
+            font-size: 18px;
+          }
+        }
+
+        h3 {
+          font-size: 18px;
+        }
+      }
+    }
+
+    .skills-summary {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+
+      .summary-item {
+        padding: 30px 15px;
+
+        .summary-number {
+          font-size: 36px;
+        }
+      }
     }
   }
 
@@ -803,22 +993,61 @@ html {
     }
   }
 
-  #services {
-    padding: 60px 0;
+  #skills {
+    padding: 40px 0;
 
-    .service-sub-heading {
+    .skills-heading {
       font-size: 28px;
     }
 
-    .service-card {
-      padding: 20px;
+    .skills-subtitle {
+      font-size: 16px;
+    }
 
-      h2 {
-        font-size: 20px;
+    .skills-grid {
+      gap: 20px;
+    }
+
+    .skill-category {
+      padding: 15px;
+
+      .category-header {
+        margin-bottom: 15px;
+        gap: 10px;
+
+        .category-icon {
+          width: 35px;
+          height: 35px;
+
+          i {
+            font-size: 16px;
+          }
+        }
+
+        h3 {
+          font-size: 16px;
+        }
       }
 
-      p {
-        font-size: 14px;
+      .skills-list {
+        gap: 15px;
+      }
+    }
+
+    .skills-summary {
+      grid-template-columns: 1fr;
+      gap: 15px;
+
+      .summary-item {
+        padding: 25px 10px;
+
+        .summary-number {
+          font-size: 32px;
+        }
+
+        .summary-label {
+          font-size: 12px;
+        }
       }
     }
   }
@@ -848,45 +1077,21 @@ html {
 
 // Additional Mobile Optimizations
 @media screen and (max-width: 320px) {
-  #header {
-    nav {
-      #nav-menu li a {
-        font-size: 18px;
+  #skills {
+    .skills-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .skill-category {
+      min-width: auto;
+    }
+
+    .skills-summary {
+      .summary-item {
+        .summary-number {
+          font-size: 28px;
+        }
       }
-    }
-
-    .header-text {
-      h1 {
-        font-size: 28px;
-      }
-    }
-  }
-
-  #about {
-    .about-col-2 {
-      .sub-title {
-        font-size: 24px;
-      }
-    }
-  }
-
-  #services {
-    .service-sub-heading {
-      font-size: 24px;
-    }
-
-    .service-card {
-      padding: 15px;
-    }
-  }
-
-  #projects {
-    .project-sub-heading {
-      font-size: 24px;
-    }
-
-    .carousel-container {
-      padding: 5px;
     }
   }
 }

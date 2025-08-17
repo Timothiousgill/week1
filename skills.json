@@ -1,0 +1,76 @@
+{
+  "skillCategories": [
+    {
+      "id": "frontend",
+      "title": "Frontend Development",
+      "icon": "fas fa-code",
+      "skills": [
+        { "name": "HTML5 & CSS3", "level": 95 },
+        { "name": "JavaScript", "level": 90 },
+        { "name": "React.js", "level": 85 },
+        { "name": "SCSS/Sass", "level": 88 }
+      ]
+    },
+    {
+      "id": "backend",
+      "title": "Backend Development", 
+      "icon": "fas fa-server",
+      "skills": [
+        { "name": "Node.js", "level": 87 },
+        { "name": "Python", "level": 82 },
+        { "name": "MongoDB", "level": 80 },
+        { "name": "Express.js", "level": 78 }
+      ]
+    },
+    {
+      "id": "gamedev",
+      "title": "Game Development",
+      "icon": "fas fa-gamepad", 
+      "skills": [
+        { "name": "Unity 3D", "level": 83 },
+        { "name": "C#", "level": 75 },
+        { "name": "Three.js", "level": 80 },
+        { "name": "Blender", "level": 72 }
+      ]
+    },
+    {
+      "id": "ai",
+      "title": "AI & Machine Learning",
+      "icon": "fas fa-brain",
+      "skills": [
+        { "name": "TensorFlow", "level": 85 },
+        { "name": "PyTorch", "level": 82 },
+        { "name": "Pandas & NumPy", "level": 78 },
+        { "name": "OpenCV", "level": 76 }
+      ]
+    },
+    {
+      "id": "design",
+      "title": "Design & Creative",
+      "icon": "fas fa-palette",
+      "skills": [
+        { "name": "Adobe Creative Suite", "level": 92 },
+        { "name": "Figma", "level": 88 },
+        { "name": "UI/UX Design", "level": 90 },
+        { "name": "Motion Graphics", "level": 85 }
+      ]
+    },
+    {
+      "id": "tools",
+      "title": "Tools & Technologies",
+      "icon": "fas fa-tools",
+      "skills": [
+        { "name": "Git & GitHub", "level": 90 },
+        { "name": "Docker", "level": 85 },
+        { "name": "AWS Services", "level": 82 },
+        { "name": "VS Code", "level": 87 }
+      ]
+    }
+  ],
+  "summary": [
+    { "value": 50, "label": "Projects Completed" },
+    { "value": 25, "label": "Technologies Mastered" },
+    { "value": 3, "label": "Years Experience" },
+    { "value": 100, "label": "Client Satisfaction", "hasPercentage": true }
+  ]
+}

@@ -1,7 +1,11 @@
 let currentSlide = 0;
 let projects = [];
+let skillsData = null;
 
 document.addEventListener('DOMContentLoaded', function () {
+    // Initialize skills section immediately with data
+    initializeSkillsSection();
+    
     // Fade-in animation
     const scrollAnimationOptions = {
         threshold: 0.1,
@@ -12,6 +16,10 @@ document.addEventListener('DOMContentLoaded', function () {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('visible');
+                if (entry.target.id === 'skills') {
+                    setTimeout(() => animateSkillBars(), 500);
+                    setTimeout(() => animateSummaryNumbers(), 800);
+                }
             }
         });
     }, scrollAnimationOptions);
@@ -20,6 +28,12 @@ document.addEventListener('DOMContentLoaded', function () {
     document.querySelectorAll('.fade-in').forEach(el => {
         observer.observe(el);
     });
+
+    // Observe skills section for animation
+    const skillsSection = document.getElementById('skills');
+    if (skillsSection) {
+        observer.observe(skillsSection);
+    }
 
     // Smooth scroll for navigation links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -32,8 +46,6 @@ document.addEventListener('DOMContentLoaded', function () {
                     block: 'start'
                 });
             }
-
-            // Close mobile menu after clicking a navigation link
             closeMobileMenu();
         });
     });
@@ -50,7 +62,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // Close menu when clicking outside or on the overlay
         navMenu.addEventListener('click', function (e) {
-            // If clicking on the menu background (not on menu items), close the menu
             if (e.target === navMenu) {
                 closeMobileMenu();
             }
@@ -98,11 +109,8 @@ document.addEventListener('DOMContentLoaded', function () {
     loadProjects().then(data => {
         if (Array.isArray(data) && data.length > 0) {
             projects = data;
-            createCarousel();
-            createDots();
-            showSlide(0);
         } else {
-            // Fallback: Create sample projects if JSON loading fails
+            // Create sample projects if JSON loading fails
             projects = [
                 {
                     title: "E-Commerce Website",
@@ -117,10 +125,10 @@ document.addEventListener('DOMContentLoaded', function () {
                     image: "Assets/project3.jpg"
                 }
             ];
-            createCarousel();
-            createDots();
-            showSlide(0);
         }
+        createCarousel();
+        createDots();
+        showSlide(0);
     });
 
     // Remove loading state when everything is loaded
@@ -128,19 +136,9 @@ document.addEventListener('DOMContentLoaded', function () {
         document.body.classList.remove('loading');
     });
 
-    // Prevent body scroll when mobile menu is open
-    function toggleBodyScroll(disable) {
-        if (disable) {
-            document.body.style.overflow = 'hidden';
-        } else {
-            document.body.style.overflow = '';
-        }
-    }
-
     // Handle window resize
     window.addEventListener('resize', function () {
         const navMenu = document.getElementById("nav-menu");
-        const menuToggle = document.querySelector('.menu-toggle');
         
         // Close mobile menu on desktop
         if (window.innerWidth > 768 && navMenu && navMenu.classList.contains('active')) {
@@ -148,6 +146,164 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 });
+
+// Initialize skills section - load data from skills.json
+async function initializeSkillsSection() {
+    try {
+        // Load skills data from external JSON file
+        const response = await fetch('skills.json');
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        skillsData = await response.json();
+        console.log('✅ Skills loaded successfully from skills.json');
+    } catch (error) {
+        console.error('❌ Failed to load skills.json:', error);
+        console.log('📋 Please ensure skills.json exists in your project root directory');
+        
+        // Show error message to user
+        showSkillsLoadError();
+        return;
+    }
+
+    // Create the skills section if we have data
+    if (skillsData) {
+        createSkillsSection();
+        createSummarySection();
+    }
+}
+
+// Show error message when skills.json fails to load
+function showSkillsLoadError() {
+    const skillsGrid = document.getElementById('skillsGrid');
+    const skillsSummary = document.getElementById('skillsSummary');
+    
+    if (skillsGrid) {
+        skillsGrid.innerHTML = `
+            <div style="
+                grid-column: 1 / -1; 
+                text-align: center; 
+                padding: 40px; 
+                background: rgba(255, 255, 255, 0.05); 
+                border-radius: 20px;
+                color: #fff;
+                border: 1px solid rgba(255, 255, 255, 0.1);
+            ">
+                <h3 style="color: #0eaec6; margin-bottom: 20px;">Skills Data Loading Error</h3>
+                <p style="color: #ccc; margin-bottom: 10px;">Could not load skills.json file.</p>
+                <p style="color: #ccc; font-size: 14px;">Please ensure the skills.json file exists in your project directory.</p>
+            </div>
+        `;
+    }
+    
+    if (skillsSummary) {
+        skillsSummary.innerHTML = '';
+    }
+}
+
+// Create skills section dynamically from JSON data
+function createSkillsSection() {
+    const skillsGrid = document.getElementById('skillsGrid');
+    if (!skillsGrid || !skillsData) {
+        console.error('Skills grid container not found or no skills data available');
+        return;
+    }
+
+    skillsGrid.innerHTML = '';
+
+    skillsData.skillCategories.forEach(category => {
+        const skillCategory = document.createElement('div');
+        skillCategory.className = 'skill-category fade-in';
+        
+        skillCategory.innerHTML = `
+            <div class="category-header">
+                <div class="category-icon">
+                    <i class="${category.icon}"></i>
+                </div>
+                <h3>${category.title}</h3>
+            </div>
+            <div class="skills-list">
+                ${category.skills.map(skill => `
+                    <div class="skill-item" data-level="${skill.level}">
+                        <div class="skill-info">
+                            <span class="skill-name">${skill.name}</span>
+                            <span class="skill-percentage">${skill.level}%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" style="--width: ${skill.level}%"></div>
+                        </div>
+                    </div>
+                `).join('')}
+            </div>
+        `;
+
+        skillsGrid.appendChild(skillCategory);
+    });
+
+    console.log('✅ Skills section created successfully');
+}
+
+// Create summary section dynamically from JSON data
+function createSummarySection() {
+    const skillsSummary = document.getElementById('skillsSummary');
+    if (!skillsSummary || !skillsData) {
+        console.error('Skills summary container not found or no skills data available');
+        return;
+    }
+
+    skillsSummary.innerHTML = '';
+
+    skillsData.summary.forEach(item => {
+        const summaryItem = document.createElement('div');
+        summaryItem.className = 'summary-item';
+        
+        const percentageHtml = item.hasPercentage ? '<span class="percentage-sign">%</span>' : '';
+        
+        summaryItem.innerHTML = `
+            <div class="summary-number" data-target="${item.value}">0${percentageHtml}</div>
+            <div class="summary-label">${item.label}</div>
+        `;
+
+        skillsSummary.appendChild(summaryItem);
+    });
+
+    console.log('✅ Skills summary created successfully');
+}
+
+// Animate skill bars
+function animateSkillBars() {
+    const skillItems = document.querySelectorAll('.skill-item');
+    skillItems.forEach((item, index) => {
+        setTimeout(() => {
+            item.classList.add('animate');
+        }, index * 100);
+    });
+}
+
+// Animate summary numbers
+function animateSummaryNumbers() {
+    const numberElements = document.querySelectorAll('.summary-number');
+    
+    numberElements.forEach(element => {
+        const target = parseInt(element.dataset.target);
+        const hasPercentage = element.innerHTML.includes('%');
+        const duration = 2000; // 2 seconds
+        const increment = target / (duration / 16); // 60fps
+        let current = 0;
+
+        const timer = setInterval(() => {
+            current += increment;
+            if (current >= target) {
+                current = target;
+                clearInterval(timer);
+            }
+            const displayValue = Math.floor(current);
+            element.innerHTML = hasPercentage ? 
+                `${displayValue}<span class="percentage-sign">%</span>` : 
+                displayValue;
+        }, 16);
+    });
+}
 
 // Mobile menu functions
 function toggleMobileMenu() {
@@ -203,17 +359,17 @@ function closeMobileMenu() {
     }
 }
 
-// Project loading function
+// Project loading 
 async function loadProjects() {
     try {
-        const response = await fetch('/data.json');
+        const response = await fetch('data.json');
         if (!response.ok) {
             throw new Error('Failed to load projects');
         }
         const data = await response.json();
         return data;
     } catch (error) {
-        console.error('Error loading projects:', error);
+        console.warn('Error loading projects:', error);
         return [];
     }
 }
@@ -271,7 +427,7 @@ function showSlide(index) {
     });
 }
 
-// Move carousel (next/previous)
+// Move carousel
 function moveCarousel(direction) {
     if (!projects.length) return;
     
@@ -284,7 +440,7 @@ function moveCarousel(direction) {
     showSlide(newSlide);
 }
 
-// Touch/swipe support for mobile carousel
+// Touch/swipe functionality
 let startX = 0;
 let endX = 0;
 
@@ -301,40 +457,16 @@ function handleSwipe() {
     const carousel = document.getElementById('projectCarousel');
     if (!carousel) return;
     
-    const threshold = 50; // minimum distance for swipe
+    const threshold = 50; 
     const diff = startX - endX;
     
     if (Math.abs(diff) > threshold) {
         if (diff > 0) {
-            // Swiped left - next slide
+            // Swipe left - next slide
             moveCarousel(1);
         } else {
-            // Swiped right - previous slide
+            // Swipe right - previous slide
             moveCarousel(-1);
         }
     }
 }
-
-// Auto-advance carousel (optional - uncomment if desired)
-// let autoSlideInterval;
-// 
-// function startAutoSlide() {
-//     if (projects.length > 1) {
-//         autoSlideInterval = setInterval(() => {
-//             moveCarousel(1);
-//         }, 5000);
-//     }
-// }
-// 
-// function stopAutoSlide() {
-//     if (autoSlideInterval) {
-//         clearInterval(autoSlideInterval);
-//     }
-// }
-// 
-// // Start auto-slide on load
-// window.addEventListener('load', startAutoSlide);
-// 
-// // Stop auto-slide when user interacts
-// document.querySelector('.carousel-container')?.addEventListener('mouseenter', stopAutoSlide);
-// document.querySelector('.carousel-container')?.addEventListener('mouseleave', startAutoSlide);
