@@ -97,8 +97,16 @@ html {
   background-position: center;
   background-repeat: no-repeat;
   background-attachment: fixed;
+  @media screen and (max-width: 1024px) {
+    background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('Assets/Hero_1.png');
+    background-size: cover;
+    background-position: right center;
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+  }
 
   @media screen and (max-width: 768px) {
+    background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('Assets/Hero_2.jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -106,6 +114,7 @@ html {
   }
 
   @media screen and (max-width: 480px) {
+    background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('Assets/Hero_2.jpg');
     background-size: cover;
     background-repeat: no-repeat;
     background-position: top center;
