@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }, scrollAnimationOptions);
 
-    // Observe fade-in elements
+    // fade-in elements
     document.querySelectorAll('.fade-in').forEach(el => {
         observer.observe(el);
     });
@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', function () {
         observer.observe(skillsSection);
     }
 
-    // Smooth scroll for navigation links
+    // Smooth scroll
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
             e.preventDefault();
@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    // Mobile menu toggle functionality
+    // Mobile menu
     const menuToggle = document.querySelector('.menu-toggle');
     const navMenu = document.getElementById("nav-menu");
 
@@ -60,14 +60,14 @@ document.addEventListener('DOMContentLoaded', function () {
             toggleMobileMenu();
         });
 
-        // Close menu when clicking outside or on the overlay
+        // Close menu when clicking 
         navMenu.addEventListener('click', function (e) {
             if (e.target === navMenu) {
                 closeMobileMenu();
             }
         });
 
-        // Close menu when pressing Escape key
+       
         document.addEventListener('keydown', function (e) {
             if (e.key === 'Escape' && navMenu.classList.contains('active')) {
                 closeMobileMenu();
@@ -83,7 +83,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }, 500);
 
-    // Parallax effect for header
     window.addEventListener('scroll', function () {
         const scrolled = window.pageYOffset;
         const header = document.getElementById('header');
@@ -111,7 +110,6 @@ document.addEventListener('DOMContentLoaded', function () {
         if (Array.isArray(data) && data.length > 0) {
             projects = data;
         } else {
-            // Create sample projects if JSON loading fails
             projects = [
                 {
                     title: "E-Commerce Website",
@@ -132,7 +130,7 @@ document.addEventListener('DOMContentLoaded', function () {
         showSlide(0);
     });
 
-    // Remove loading state when everything is loaded
+    // Remove loading state 
     window.addEventListener('load', function () {
         document.body.classList.remove('loading');
     });
@@ -140,8 +138,6 @@ document.addEventListener('DOMContentLoaded', function () {
     // Handle window resize
     window.addEventListener('resize', function () {
         const navMenu = document.getElementById("nav-menu");
-        
-        // Close mobile menu on desktop
         if (window.innerWidth > 768 && navMenu && navMenu.classList.contains('active')) {
             closeMobileMenu();
         }
@@ -151,7 +147,6 @@ document.addEventListener('DOMContentLoaded', function () {
 // Initialize skills section - load data from skills.json
 async function initializeSkillsSection() {
     try {
-        // Load skills data from external JSON file
         const response = await fetch('skills.json');
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
@@ -161,8 +156,7 @@ async function initializeSkillsSection() {
     } catch (error) {
         console.error('❌ Failed to load skills.json:', error);
         console.log('📋 Please ensure skills.json exists in your project root directory');
-        
-        // Show error message to user
+
         showSkillsLoadError();
         return;
     }
@@ -174,7 +168,7 @@ async function initializeSkillsSection() {
     }
 }
 
-// Show error message when skills.json fails to load
+// Show error for skills
 function showSkillsLoadError() {
     const skillsGrid = document.getElementById('skillsGrid');
     const skillsSummary = document.getElementById('skillsSummary');
@@ -202,7 +196,7 @@ function showSkillsLoadError() {
     }
 }
 
-// Create skills section dynamically from JSON data
+// Create skills 
 function createSkillsSection() {
     const skillsGrid = document.getElementById('skillsGrid');
     if (!skillsGrid || !skillsData) {
@@ -244,32 +238,6 @@ function createSkillsSection() {
     console.log('✅ Skills section created successfully');
 }
 
-// Create summary section dynamically from JSON data
-function createSummarySection() {
-    const skillsSummary = document.getElementById('skillsSummary');
-    if (!skillsSummary || !skillsData) {
-        console.error('Skills summary container not found or no skills data available');
-        return;
-    }
-
-    skillsSummary.innerHTML = '';
-
-    skillsData.summary.forEach(item => {
-        const summaryItem = document.createElement('div');
-        summaryItem.className = 'summary-item';
-        
-        const percentageHtml = item.hasPercentage ? '<span class="percentage-sign">%</span>' : '';
-        
-        summaryItem.innerHTML = `
-            <div class="summary-number" data-target="${item.value}">0${percentageHtml}</div>
-            <div class="summary-label">${item.label}</div>
-        `;
-
-        skillsSummary.appendChild(summaryItem);
-    });
-
-    console.log('✅ Skills summary created successfully');
-}
 
 // Animate skill bars
 function animateSkillBars() {
@@ -281,30 +249,7 @@ function animateSkillBars() {
     });
 }
 
-// Animate summary numbers
-function animateSummaryNumbers() {
-    const numberElements = document.querySelectorAll('.summary-number');
-    
-    numberElements.forEach(element => {
-        const target = parseInt(element.dataset.target);
-        const hasPercentage = element.innerHTML.includes('%');
-        const duration = 2000; // 2 seconds
-        const increment = target / (duration / 16); // 60fps
-        let current = 0;
 
-        const timer = setInterval(() => {
-            current += increment;
-            if (current >= target) {
-                current = target;
-                clearInterval(timer);
-            }
-            const displayValue = Math.floor(current);
-            element.innerHTML = hasPercentage ? 
-                `${displayValue}<span class="percentage-sign">%</span>` : 
-                displayValue;
-        }, 16);
-    });
-}
 
 // Mobile menu functions
 function toggleMobileMenu() {
