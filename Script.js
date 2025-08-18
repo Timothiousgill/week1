@@ -3,7 +3,7 @@ let projects = [];
 let skillsData = null;
 
 document.addEventListener('DOMContentLoaded', function () {
-    // Initialize skills section immediately with data
+    // Initialize skills 
     initializeSkillsSection();
     
     // Fade-in animation
@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', function () {
         observer.observe(el);
     });
 
-    // Observe skills section for animation
+    // Slills animation
     const skillsSection = document.getElementById('skills');
     if (skillsSection) {
         observer.observe(skillsSection);
@@ -104,6 +104,7 @@ document.addEventListener('DOMContentLoaded', function () {
             nav.style.backdropFilter = 'none';
         }
     });
+    
 
     // Load the project data and initialize carousel
     loadProjects().then(data => {
@@ -166,7 +167,7 @@ async function initializeSkillsSection() {
         return;
     }
 
-    // Create the skills section if we have data
+
     if (skillsData) {
         createSkillsSection();
         createSummarySection();
@@ -374,6 +375,8 @@ async function loadProjects() {
     }
 }
 
+
+
 // Create carousel from projects data
 function createCarousel() {
     const carousel = document.getElementById('projectCarousel');
@@ -440,7 +443,7 @@ function moveCarousel(direction) {
     showSlide(newSlide);
 }
 
-// Touch/swipe functionality
+// Touch/swipe 
 let startX = 0;
 let endX = 0;
 

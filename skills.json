@@ -1,5 +1,4 @@
-{
-  "skillCategories": [
+[
     {
       "id": "frontend",
       "title": "Frontend Development",
@@ -66,11 +65,4 @@
         { "name": "VS Code", "level": 87 }
       ]
     }
-  ],
-  "summary": [
-    { "value": 50, "label": "Projects Completed" },
-    { "value": 25, "label": "Technologies Mastered" },
-    { "value": 3, "label": "Years Experience" },
-    { "value": 100, "label": "Client Satisfaction", "hasPercentage": true }
   ]
-}
