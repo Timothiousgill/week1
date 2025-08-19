@@ -1,11 +1,7 @@
 let currentSlide = 0;
 let projects = [];
-let skillsData = null;
 
 document.addEventListener('DOMContentLoaded', function () {
-    // Initialize skills 
-    initializeSkillsSection();
-    
     // Fade-in animation
     const scrollAnimationOptions = {
         threshold: 0.1,
@@ -18,7 +14,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 entry.target.classList.add('visible');
                 if (entry.target.id === 'skills') {
                     setTimeout(() => animateSkillBars(), 500);
-                    setTimeout(() => animateSummaryNumbers(), 800);
                 }
             }
         });
@@ -29,7 +24,7 @@ document.addEventListener('DOMContentLoaded', function () {
         observer.observe(el);
     });
 
-    // Slills animation
+    // Skills animation
     const skillsSection = document.getElementById('skills');
     if (skillsSection) {
         observer.observe(skillsSection);
@@ -92,7 +87,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    // Navigation background on scroll
+    // Navigation background
     window.addEventListener('scroll', function () {
         const nav = document.querySelector('nav');
         if (window.scrollY > 50) {
@@ -105,7 +100,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
     
 
-    // Load the project data and initialize carousel
+    // Load the project data
     loadProjects().then(data => {
         if (Array.isArray(data) && data.length > 0) {
             projects = data;
@@ -144,101 +139,6 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
-// Initialize skills section - load data from skills.json
-async function initializeSkillsSection() {
-    try {
-        const response = await fetch('skills.json');
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        skillsData = await response.json();
-        console.log('✅ Skills loaded successfully from skills.json');
-    } catch (error) {
-        console.error('❌ Failed to load skills.json:', error);
-        console.log('📋 Please ensure skills.json exists in your project root directory');
-
-        showSkillsLoadError();
-        return;
-    }
-
-
-    if (skillsData) {
-        createSkillsSection();
-        createSummarySection();
-    }
-}
-
-// Show error for skills
-function showSkillsLoadError() {
-    const skillsGrid = document.getElementById('skillsGrid');
-    const skillsSummary = document.getElementById('skillsSummary');
-    
-    if (skillsGrid) {
-        skillsGrid.innerHTML = `
-            <div style="
-                grid-column: 1 / -1; 
-                text-align: center; 
-                padding: 40px; 
-                background: rgba(255, 255, 255, 0.05); 
-                border-radius: 20px;
-                color: #fff;
-                border: 1px solid rgba(255, 255, 255, 0.1);
-            ">
-                <h3 style="color: #0eaec6; margin-bottom: 20px;">Skills Data Loading Error</h3>
-                <p style="color: #ccc; margin-bottom: 10px;">Could not load skills.json file.</p>
-                <p style="color: #ccc; font-size: 14px;">Please ensure the skills.json file exists in your project directory.</p>
-            </div>
-        `;
-    }
-    
-    if (skillsSummary) {
-        skillsSummary.innerHTML = '';
-    }
-}
-
-// Create skills 
-function createSkillsSection() {
-    const skillsGrid = document.getElementById('skillsGrid');
-    if (!skillsGrid || !skillsData) {
-        console.error('Skills grid container not found or no skills data available');
-        return;
-    }
-
-    skillsGrid.innerHTML = '';
-
-    skillsData.skillCategories.forEach(category => {
-        const skillCategory = document.createElement('div');
-        skillCategory.className = 'skill-category fade-in';
-        
-        skillCategory.innerHTML = `
-            <div class="category-header">
-                <div class="category-icon">
-                    <i class="${category.icon}"></i>
-                </div>
-                <h3>${category.title}</h3>
-            </div>
-            <div class="skills-list">
-                ${category.skills.map(skill => `
-                    <div class="skill-item" data-level="${skill.level}">
-                        <div class="skill-info">
-                            <span class="skill-name">${skill.name}</span>
-                            <span class="skill-percentage">${skill.level}%</span>
-                        </div>
-                        <div class="skill-bar">
-                            <div class="skill-progress" style="--width: ${skill.level}%"></div>
-                        </div>
-                    </div>
-                `).join('')}
-            </div>
-        `;
-
-        skillsGrid.appendChild(skillCategory);
-    });
-
-    console.log('✅ Skills section created successfully');
-}
-
-
 // Animate skill bars
 function animateSkillBars() {
     const skillItems = document.querySelectorAll('.skill-item');
@@ -248,8 +148,6 @@ function animateSkillBars() {
         }, index * 100);
     });
 }
-
-
 
 // Mobile menu functions
 function toggleMobileMenu() {
@@ -276,7 +174,7 @@ function openMobileMenu() {
         menuToggle.classList.add('active');
         document.body.style.overflow = 'hidden';
         
-        // Add staggered animation to menu items
+        // animation to menu items
         const menuItems = navMenu.querySelectorAll('li');
         menuItems.forEach((item, index) => {
             setTimeout(() => {
@@ -296,7 +194,7 @@ function closeMobileMenu() {
         menuToggle.classList.remove('active');
         document.body.style.overflow = '';
         
-        // Reset menu items animation
+        // Reset menu
         const menuItems = navMenu.querySelectorAll('li');
         menuItems.forEach(item => {
             item.style.opacity = '';
@@ -320,9 +218,7 @@ async function loadProjects() {
     }
 }
 
-
-
-// Create carousel from projects data
+// Create carousel 
 function createCarousel() {
     const carousel = document.getElementById('projectCarousel');
     if (!carousel) return;
@@ -410,10 +306,10 @@ function handleSwipe() {
     
     if (Math.abs(diff) > threshold) {
         if (diff > 0) {
-            // Swipe left - next slide
+            // Swipe left 
             moveCarousel(1);
         } else {
-            // Swipe right - previous slide
+            // Swipe right 
             moveCarousel(-1);
         }
     }
