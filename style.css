@@ -24,7 +24,7 @@ html {
 #header {
   height: 100vh;
   width: 100%;
-  background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url("Assets/Hero_1.png");
+  background: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.4)), url("Assets/Hero_3.png");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -32,7 +32,7 @@ html {
 }
 @media screen and (max-width: 1024px) {
   #header {
-    background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url("Assets/Hero_1.png");
+    background: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.4)), url("Assets/Hero_3.png");
     background-size: cover;
     background-position: right center;
     background-repeat: no-repeat;
@@ -41,7 +41,7 @@ html {
 }
 @media screen and (max-width: 768px) {
   #header {
-    background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url("Assets/Hero_2.jpg");
+    background: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.4)), url("Assets/Hero_2.jpg");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -50,7 +50,7 @@ html {
 }
 @media screen and (max-width: 480px) {
   #header {
-    background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url("Assets/Hero_2.jpg");
+    background: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.4)), url("Assets/Hero_2.jpg");
     background-size: cover;
     background-repeat: no-repeat;
     background-position: top center;
@@ -120,14 +120,14 @@ html {
   transform: translateY(-2px);
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
 }
+#header nav .Resume-btn::after {
+  display: none !important;
+}
 #header nav .Resume-btn:hover {
   background-color: #0c97ac;
+  color: white !important;
   transform: translateY(-2px);
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
-}
-#header nav .Resume-btn:focus {
-  outline: 2px solid #0eaec6;
-  outline-offset: 2px;
 }
 #header .header-text {
   margin-top: 15%;

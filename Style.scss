@@ -65,7 +65,7 @@ $skill-progress-bg: linear-gradient(90deg, $gradient-start, $gradient-end);
 }
 
 @mixin button_use(
-  $bg-color: #007BFF,
+  $bg-color: #007bff,
   $text-color: #fff,
   $hover-bg: #0056b3,
   $padding: 15px,
@@ -86,10 +86,7 @@ $skill-progress-bg: linear-gradient(90deg, $gradient-start, $gradient-end);
     background-color: $hover-bg;
     transform: translateY(-2px);
   }
-
-
 }
-
 
 // Base Styles
 * {
@@ -119,15 +116,15 @@ html {
 #header {
   height: 100vh;
   width: 100%;
-  background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
-    url("Assets/Hero_1.png");
+  background: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.4)),
+    url("Assets/Hero_3.png");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   background-attachment: fixed;
   @media screen and (max-width: 1024px) {
-    background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
-      url("Assets/Hero_1.png");
+    background: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.4)),
+      url("Assets/Hero_3.png");
     background-size: cover;
     background-position: right center;
     background-repeat: no-repeat;
@@ -135,7 +132,7 @@ html {
   }
 
   @media screen and (max-width: 768px) {
-    background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+    background: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.4)),
       url("Assets/Hero_2.jpg");
     background-size: cover;
     background-position: center;
@@ -144,7 +141,7 @@ html {
   }
 
   @media screen and (max-width: 480px) {
-    background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+    background: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.4)),
       url("Assets/Hero_2.jpg");
     background-size: cover;
     background-repeat: no-repeat;
@@ -209,16 +206,15 @@ html {
       @include button-style($primary-color);
       text-decoration: none;
       display: inline-block;
+      &::after {
+        display: none !important; // This removes the blue underline
+      }
 
       &:hover {
         background-color: $primary-hover;
+        color: white !important; // Use !important to ensure it overrides
         transform: translateY(-2px);
         box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
-      }
-
-      &:focus {
-        outline: 2px solid $primary-color;
-        outline-offset: 2px;
       }
     }
   }
@@ -831,16 +827,13 @@ html {
       font-size: 1rem;
       width: 100%;
       transition: border-color 0.3s;
-
-
-
     }
     .btn-primary {
-        @include button_use($primary-color, $text-light, $primary-hover, 15px);
-        font-size: 1rem;
-        margin-top: 10px;
-        cursor: pointer;
-      }
+      @include button_use($primary-color, $text-light, $primary-hover, 15px);
+      font-size: 1rem;
+      margin-top: 10px;
+      cursor: pointer;
+    }
   }
 }
 

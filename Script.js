@@ -91,7 +91,7 @@ document.addEventListener('DOMContentLoaded', function () {
     window.addEventListener('scroll', function () {
         const nav = document.querySelector('nav');
         if (window.scrollY > 50) {
-            nav.style.background = 'rgba(0, 0, 0, 0.9)';
+            // nav.style.background = 'rgba(255, 255, 255, 0)';
             nav.style.backdropFilter = 'blur(10px)';
         } else {
             nav.style.background = 'transparent';
