@@ -246,8 +246,76 @@ function updateGraphicsCarousel() {
     
     track.style.transform = `translateX(${offset}%)`;
     
+    // Apply center focus effect only for desktop (3 items visible)
+    if (itemsVisible === 3) {
+        applyCarouselFocusEffect();
+    } else {
+        // Reset all items for mobile/tablet view
+        resetCarouselItems();
+    }
+    
     // Update button states
     updateGraphicsButtonStates();
+}
+
+function applyCarouselFocusEffect() {
+    // Reset all items first
+    items.forEach((item, i) => {
+        const img = item.querySelector('img');
+        if (img) {
+            // Remove all classes
+            item.classList.remove('carousel-center', 'carousel-side');
+            
+            // Reset transforms and opacity
+            img.style.transform = 'scale(1)';
+            img.style.opacity = '1';
+            img.style.transition = 'all 0.5s ease';
+        }
+    });
+    
+    // Apply focus effect based on current index
+    const centerIndex = index + 1; // Middle item in the visible set
+    
+    items.forEach((item, i) => {
+        const img = item.querySelector('img');
+        if (!img) return;
+        
+        if (i >= index && i < index + 3) {
+            // This item is visible
+            if (i === centerIndex) {
+                // Center item - scale up
+                item.classList.add('carousel-center');
+                img.style.transform = 'scale(1.15)';
+                img.style.opacity = '1';
+                img.style.zIndex = '10';
+            } else {
+                // Side items - fade out slightly
+                item.classList.add('carousel-side');
+                img.style.transform = 'scale(0.95)';
+                img.style.opacity = '0.7';
+                img.style.zIndex = '5';
+            }
+        } else {
+            // Hidden items
+            img.style.transform = 'scale(1)';
+            img.style.opacity = '1';
+            img.style.zIndex = '1';
+        }
+    });
+}
+
+function resetCarouselItems() {
+    // Reset all transformations for mobile/tablet view
+    items.forEach((item) => {
+        const img = item.querySelector('img');
+        if (img) {
+            item.classList.remove('carousel-center', 'carousel-side');
+            img.style.transform = 'scale(1)';
+            img.style.opacity = '1';
+            img.style.zIndex = '1';
+            img.style.transition = 'all 0.3s ease';
+        }
+    });
 }
 
 function updateGraphicsButtonStates() {

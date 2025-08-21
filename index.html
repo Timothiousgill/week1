@@ -38,7 +38,7 @@
           </ul>
         </nav>
         <div class="header-text fade-in">
-          <p>Welcome to My portfolio</p>
+          <p>I'm Timothious</p>
           <h1>
             Your one-stop <br />solution for all <br />
             your needs.
@@ -108,40 +108,76 @@
             </div> -->
       </div>
     </div>
-
     <div id="graphics">
       <div class="container">
-        <button class="carousel__btn prev">‹</button>
-        <div class="carousel__track"></div>
-        <button class="carousel__btn next">›</button>
+        <div class="sub-head">
+          <h1 class="graphics-sub-heading fade-in">Graphics Content</h1>
+        </div>
+        <div class="carousel-wrapper">
+          <button class="carousel__btn prev">‹</button>
+          <div class="carousel">
+            <div class="carousel__track"></div>
+          </div>
+          <button class="carousel__btn next">›</button>
+        </div>
       </div>
     </div>
 
     <div id="Contact">
       <div class="container">
-        <div class="contact-image fade-in">
-          <img src="Assets/contact.jpg" alt="Contact Timothious" />
-        </div>
-        <div class="contact-content fade-in">
-          <h1 class="contact-heading fade-in">Get in Touch</h1>
-          <p class="contact-subtitle fade-in">I would love to hear from you!</p>
-          <div class="contact-form fade-in">
-            <form action="https://formspree.io/f/mzzvlvkw" method="POST">
-              <input type="text" name="name" placeholder="Your Name" required />
-              <input
-                type="email"
-                name="_replyto"
-                placeholder="Your Email"
-                required
-              />
-              <textarea
-                name="message"
-                rows="5"
-                placeholder="Your Message"
-                required
-              ></textarea>
-              <button type="submit" class="btn-primary">Send Message</button>
-            </form>
+        <div class="contact-content">
+          <div class="contact-header">
+            <h1 class="contact-heading">Let's Work Together</h1>
+            <p class="contact-subtitle">
+              Ready to bring your ideas to life? Let's start a conversation.
+            </p>
+          </div>
+
+          <div class="contact-wrapper">
+            <div class="contact-form">
+              <form action="https://formspree.io/f/mzzvlvkw" method="POST">
+                <div class="form-group">
+                  <div class="input-container">
+                    <i class="fas fa-user"></i>
+                    <input
+                      type="text"
+                      name="name"
+                      placeholder="Your Name"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <div class="input-container">
+                    <i class="fas fa-envelope"></i>
+                    <input
+                      type="email"
+                      name="_replyto"
+                      placeholder="Your Email"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <div class="input-container textarea-container">
+                    <i class="fas fa-comment"></i>
+                    <textarea
+                      name="message"
+                      rows="5"
+                      placeholder="Tell me about your project..."
+                      required
+                    ></textarea>
+                  </div>
+                </div>
+
+                <button type="submit" class="btn-primary">
+                  <span>Send Message</span>
+                  <i class="fas fa-arrow-right"></i>
+                </button>
+              </form>
+            </div>
           </div>
         </div>
       </div>
@@ -151,22 +187,30 @@
       <div class="container">
         <div class="footer-top">
           <div class="footer-socials">
-            <!-- <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a> -->
             <a
               href="https://soundcloud.com/t_i_m_o_t_h_i_o_u_s"
               aria-label="SoundCloud"
-              ><i class="fab fa-soundcloud"></i
-            ></a>
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <i class="fab fa-soundcloud"></i>
+            </a>
             <a
               href="https://www.instagram.com/timothious.official/"
               aria-label="Instagram"
-              ><i class="fab fa-instagram"></i
-            ></a>
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <i class="fab fa-instagram"></i>
+            </a>
             <a
               href="https://www.bandlab.com/timothious_official"
               aria-label="BandLab"
               class="bandlab-link"
+              target="_blank"
+              rel="noopener noreferrer"
             >
+              <!-- BandLab SVG -->
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 x="0px"
@@ -211,6 +255,7 @@
               href="https://github.com/timothiousgill"
               aria-label="GitHub"
               target="_blank"
+              rel="noopener noreferrer"
             >
               <i class="fab fa-github"></i>
             </a>
