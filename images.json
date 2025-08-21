@@ -1,0 +1,13 @@
+{
+  "images": [
+    { "src": "/Assets/Graphics/img1.png", "alt": "Image 1" },
+    { "src": "/Assets/Graphics/img2.png", "alt": "Image 2" },
+    { "src": "/Assets/Graphics/img3.png", "alt": "Image 3" },
+    { "src": "/Assets/Graphics/img4.png", "alt": "Image 4" },
+    { "src": "/Assets/Graphics/img5.png", "alt": "Image 5" },
+    { "src": "/Assets/Graphics/img6.png", "alt": "Image 6" },
+    { "src": "/Assets/Graphics/img7.png", "alt": "Image 7" }
+  ]
+}
+
+

@@ -1,6 +1,13 @@
 let currentSlide = 0;
 let projects = [];
 
+let items = [];
+let index = 0;
+
+const track = document.querySelector(".carousel__track");
+const nextBtn = document.querySelector(".next");
+const prevBtn = document.querySelector(".prev");
+
 document.addEventListener('DOMContentLoaded', function () {
     // Fade-in animation
     const scrollAnimationOptions = {
@@ -55,14 +62,12 @@ document.addEventListener('DOMContentLoaded', function () {
             toggleMobileMenu();
         });
 
-        // Close menu when clicking 
         navMenu.addEventListener('click', function (e) {
             if (e.target === navMenu) {
                 closeMobileMenu();
             }
         });
 
-       
         document.addEventListener('keydown', function (e) {
             if (e.key === 'Escape' && navMenu.classList.contains('active')) {
                 closeMobileMenu();
@@ -78,6 +83,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }, 500);
 
+    // Parallax effect
     window.addEventListener('scroll', function () {
         const scrolled = window.pageYOffset;
         const header = document.getElementById('header');
@@ -91,20 +97,184 @@ document.addEventListener('DOMContentLoaded', function () {
     window.addEventListener('scroll', function () {
         const nav = document.querySelector('nav');
         if (window.scrollY > 50) {
-            // nav.style.background = 'rgba(255, 255, 255, 0)';
             nav.style.backdropFilter = 'blur(10px)';
         } else {
             nav.style.background = 'transparent';
             nav.style.backdropFilter = 'none';
         }
     });
-    
 
-    // Load the project data
-    loadProjects().then(data => {
+    // Initialize graphics carousel
+    initializeGraphicsCarousel();
+    
+    // Initialize projects carousel
+    initializeProjectsCarousel();
+
+    // Remove loading state 
+    window.addEventListener('load', function () {
+        document.body.classList.remove('loading');
+    });
+
+    // Handle window resize
+    window.addEventListener('resize', function () {
+        const navMenu = document.getElementById("nav-menu");
+        if (window.innerWidth > 768 && navMenu && navMenu.classList.contains('active')) {
+            closeMobileMenu();
+        }
+    });
+});
+
+// Graphics Carousel Functions
+async function initializeGraphicsCarousel() {
+    try {
+        await loadImages();
+        if (items.length > 0) {
+            setupGraphicsCarouselButtons();
+            updateGraphicsCarousel();
+        }
+    } catch (error) {
+        console.error('Failed to initialize graphics carousel:', error);
+    }
+}
+
+async function loadImages() {
+    try {
+        const response = await fetch('images.json');
+        if (!response.ok) {
+            throw new Error('Failed to load images');
+        }
+        const data = await response.json();
+        
+        // Clear existing content
+        if (track) {
+            track.innerHTML = '';
+        }
+        
+        data.images.forEach(imgData => {
+            const item = document.createElement("div");
+            item.classList.add("carousel__item");
+            const img = document.createElement("img");
+            img.src = imgData.src;
+            img.alt = imgData.alt;
+            img.onerror = function() {
+                this.src = 'Assets/failedImg.png';
+            };
+            item.appendChild(img);
+            track.appendChild(item);
+        });
+        
+        // Update items array
+        items = document.querySelectorAll(".carousel__item");
+        console.log(`Loaded ${items.length} carousel items`);
+        
+    } catch (error) {
+        console.error("Error loading images:", error);
+        createFallbackCarousel();
+    }
+}
+
+function createFallbackCarousel() {
+    if (!track) return;
+    
+    const fallbackImages = [
+        { src: 'Graphics/img1.png', alt: 'Graphics 1' },
+        { src: 'Graphics/img2.png', alt: 'Graphics 2' },
+        { src: 'Graphics/img3.png', alt: 'Graphics 3' }
+    ];
+    
+    track.innerHTML = '';
+    
+    fallbackImages.forEach(imgData => {
+        const item = document.createElement("div");
+        item.classList.add("carousel__item");
+        const img = document.createElement("img");
+        img.src = imgData.src;
+        img.alt = imgData.alt;
+        img.onerror = function() {
+            this.src = 'Assets/failedImg.png';
+        };
+        item.appendChild(img);
+        track.appendChild(item);
+    });
+    
+    items = document.querySelectorAll(".carousel__item");
+}
+
+function setupGraphicsCarouselButtons() {
+    if (!nextBtn || !prevBtn || items.length === 0) {
+        console.warn('Graphics carousel buttons or items not found');
+        return;
+    }
+    
+    // Next button
+    nextBtn.addEventListener("click", () => {
+        const itemsVisible = getVisibleItemsCount();
+        const maxIndex = Math.max(0, items.length - itemsVisible);
+        
+        if (index < maxIndex) {
+            index++;
+            updateGraphicsCarousel();
+        }
+    });
+
+    // Previous button
+    prevBtn.addEventListener("click", () => {
+        if (index > 0) {
+            index--;
+            updateGraphicsCarousel();
+        }
+    });
+    
+    // Initial setup
+    updateGraphicsCarousel();
+}
+
+function getVisibleItemsCount() {
+    // Determine how many items are visible based on screen size
+    const screenWidth = window.innerWidth;
+    if (screenWidth < 768) return 1;      // Mobile: 1 item
+    if (screenWidth < 1024) return 2;     // Tablet: 2 items
+    return 3;                             // Desktop: 3 items
+}
+
+function updateGraphicsCarousel() {
+    if (!items || items.length === 0 || !track) return;
+    
+    const itemsVisible = getVisibleItemsCount();
+    const itemWidth = 100 / itemsVisible;
+    const offset = -(index * itemWidth);
+    
+    track.style.transform = `translateX(${offset}%)`;
+    
+    // Update button states
+    updateGraphicsButtonStates();
+}
+
+function updateGraphicsButtonStates() {
+    if (!nextBtn || !prevBtn) return;
+    
+    const itemsVisible = getVisibleItemsCount();
+    const maxIndex = Math.max(0, items.length - itemsVisible);
+    
+    // Previous button
+    prevBtn.disabled = (index <= 0);
+    prevBtn.style.opacity = (index <= 0) ? '0.5' : '1';
+    prevBtn.style.cursor = (index <= 0) ? 'not-allowed' : 'pointer';
+    
+    // Next button
+    nextBtn.disabled = (index >= maxIndex);
+    nextBtn.style.opacity = (index >= maxIndex) ? '0.5' : '1';
+    nextBtn.style.cursor = (index >= maxIndex) ? 'not-allowed' : 'pointer';
+}
+
+// Projects Carousel Functions
+async function initializeProjectsCarousel() {
+    try {
+        const data = await loadProjects();
         if (Array.isArray(data) && data.length > 0) {
             projects = data;
         } else {
+            // Fallback projects
             projects = [
                 {
                     title: "E-Commerce Website",
@@ -123,23 +293,88 @@ document.addEventListener('DOMContentLoaded', function () {
         createCarousel();
         createDots();
         showSlide(0);
-    });
+    } catch (error) {
+        console.error('Failed to initialize projects carousel:', error);
+    }
+}
 
-    // Remove loading state 
-    window.addEventListener('load', function () {
-        document.body.classList.remove('loading');
-    });
-
-    // Handle window resize
-    window.addEventListener('resize', function () {
-        const navMenu = document.getElementById("nav-menu");
-        if (window.innerWidth > 768 && navMenu && navMenu.classList.contains('active')) {
-            closeMobileMenu();
+async function loadProjects() {
+    try {
+        const response = await fetch('data.json');
+        if (!response.ok) {
+            throw new Error('Failed to load projects');
         }
-    });
-});
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.warn('Error loading projects:', error);
+        return [];
+    }
+}
 
-// Animate skill bars
+function createCarousel() {
+    const carousel = document.getElementById('projectCarousel');
+    if (!carousel) return;
+
+    carousel.innerHTML = '';
+
+    projects.forEach((project, index) => {
+        const projectCard = document.createElement('div');
+        projectCard.className = 'project-card';
+
+        projectCard.innerHTML = `
+            <img src="${project.image}" alt="${project.title}" onerror="this.src='Assets/failedImg.png';">
+            <div class="project-content">
+                <h3>${project.title}</h3>
+            </div>
+        `;
+
+        carousel.appendChild(projectCard);
+    });
+}
+
+function createDots() {
+    const dotsContainer = document.getElementById('carouselDots');
+    if (!dotsContainer) return;
+
+    dotsContainer.innerHTML = '';
+
+    projects.forEach((_, index) => {
+        const dot = document.createElement('div');
+        dot.className = 'dot';
+        dot.addEventListener('click', () => showSlide(index));
+        dotsContainer.appendChild(dot);
+    });
+}
+
+function showSlide(slideIndex) {
+    const carousel = document.getElementById('projectCarousel');
+    const dots = document.querySelectorAll('.dot');
+
+    if (!carousel || !dots.length || !projects.length) return;
+    
+    currentSlide = slideIndex;
+    const translateX = -slideIndex * 100;
+    carousel.style.transform = `translateX(${translateX}%)`;
+    
+    dots.forEach((dot, i) => {
+        dot.classList.toggle('active', i === slideIndex);
+    });
+}
+
+function moveCarousel(direction) {
+    if (!projects.length) return;
+    
+    let newSlide = currentSlide + direction;
+    if (newSlide < 0) {
+        newSlide = projects.length - 1;
+    } else if (newSlide >= projects.length) {
+        newSlide = 0;
+    }
+    showSlide(newSlide);
+}
+
+// Utility Functions
 function animateSkillBars() {
     const skillItems = document.querySelectorAll('.skill-item');
     skillItems.forEach((item, index) => {
@@ -149,7 +384,6 @@ function animateSkillBars() {
     });
 }
 
-// Mobile menu functions
 function toggleMobileMenu() {
     const navMenu = document.getElementById("nav-menu");
     const menuToggle = document.querySelector('.menu-toggle');
@@ -174,7 +408,6 @@ function openMobileMenu() {
         menuToggle.classList.add('active');
         document.body.style.overflow = 'hidden';
         
-        // animation to menu items
         const menuItems = navMenu.querySelectorAll('li');
         menuItems.forEach((item, index) => {
             setTimeout(() => {
@@ -194,7 +427,6 @@ function closeMobileMenu() {
         menuToggle.classList.remove('active');
         document.body.style.overflow = '';
         
-        // Reset menu
         const menuItems = navMenu.querySelectorAll('li');
         menuItems.forEach(item => {
             item.style.opacity = '';
@@ -203,114 +435,46 @@ function closeMobileMenu() {
     }
 }
 
-// Project loading 
-async function loadProjects() {
-    try {
-        const response = await fetch('data.json');
-        if (!response.ok) {
-            throw new Error('Failed to load projects');
-        }
-        const data = await response.json();
-        return data;
-    } catch (error) {
-        console.warn('Error loading projects:', error);
-        return [];
-    }
-}
-
-// Create carousel 
-function createCarousel() {
-    const carousel = document.getElementById('projectCarousel');
-    if (!carousel) return;
-
-    carousel.innerHTML = '';
-
-    projects.forEach((project, index) => {
-        const projectCard = document.createElement('div');
-        projectCard.className = 'project-card';
-
-        projectCard.innerHTML = `
-            <img src="${project.image}" alt="${project.title}" onerror="this.src='Assets/failedImg.png';">
-            <div class="project-content">
-                <h3>${project.title}</h3>
-            </div>
-        `;
-
-        carousel.appendChild(projectCard);
-    });
-}
-
-// Create navigation dots
-function createDots() {
-    const dotsContainer = document.getElementById('carouselDots');
-    if (!dotsContainer) return;
-
-    dotsContainer.innerHTML = '';
-
-    projects.forEach((_, index) => {
-        const dot = document.createElement('div');
-        dot.className = 'dot';
-        dot.addEventListener('click', () => showSlide(index));
-        dotsContainer.appendChild(dot);
-    });
-}
-
-// Show specific slide
-function showSlide(index) {
-    const carousel = document.getElementById('projectCarousel');
-    const dots = document.querySelectorAll('.dot');
-
-    if (!carousel || !dots.length || !projects.length) return;
-    
-    currentSlide = index;
-    const translateX = -index * 100;
-    carousel.style.transform = `translateX(${translateX}%)`;
-    
-    dots.forEach((dot, i) => {
-        dot.classList.toggle('active', i === index);
-    });
-}
-
-// Move carousel
-function moveCarousel(direction) {
-    if (!projects.length) return;
-    
-    let newSlide = currentSlide + direction;
-    if (newSlide < 0) {
-        newSlide = projects.length - 1;
-    } else if (newSlide >= projects.length) {
-        newSlide = 0;
-    }
-    showSlide(newSlide);
-}
-
-// Touch/swipe 
+// Touch/Swipe Support for Projects
 let startX = 0;
 let endX = 0;
 
 document.addEventListener('touchstart', function(e) {
-    startX = e.changedTouches[0].screenX;
+    const projectCarousel = document.getElementById('projectCarousel');
+    if (projectCarousel && projectCarousel.contains(e.target)) {
+        startX = e.changedTouches[0].screenX;
+    }
 }, { passive: true });
 
 document.addEventListener('touchend', function(e) {
-    endX = e.changedTouches[0].screenX;
-    handleSwipe();
+    const projectCarousel = document.getElementById('projectCarousel');
+    if (projectCarousel && projectCarousel.contains(e.target)) {
+        endX = e.changedTouches[0].screenX;
+        handleSwipe();
+    }
 }, { passive: true });
 
 function handleSwipe() {
-    const carousel = document.getElementById('projectCarousel');
-    if (!carousel) return;
-    
-    const threshold = 50; 
+    const threshold = 50;
     const diff = startX - endX;
     
     if (Math.abs(diff) > threshold) {
         if (diff > 0) {
-            // Swipe left 
-            moveCarousel(1);
+            moveCarousel(1);  // Swipe left - next
         } else {
-            // Swipe right 
-            moveCarousel(-1);
+            moveCarousel(-1); // Swipe right - previous
         }
     }
 }
+
+// Handle window resize for graphics carousel
+window.addEventListener('resize', function() {
+    if (items.length > 0) {
+        const itemsVisible = getVisibleItemsCount();
+        const maxIndex = Math.max(0, items.length - itemsVisible);
+        if (index > maxIndex) {
+            index = maxIndex;
+        }
+        updateGraphicsCarousel();
+    }
+});

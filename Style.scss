@@ -336,244 +336,93 @@ html {
   }
 }
 
-// Skills Section
-#skills {
-  padding: 100px 0;
+//  Graphics
+#graphics {
+  padding: 80px 0;
   background: $bg-dark;
-  position: relative;
-  overflow: hidden;
-
-  // Background Effects
-  &::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: radial-gradient(
-        circle at 20% 80%,
-        rgba(14, 174, 198, 0.1) 0%,
-        transparent 50%
-      ),
-      radial-gradient(
-        circle at 80% 20%,
-        rgba(20, 184, 204, 0.1) 0%,
-        transparent 50%
-      );
-    pointer-events: none;
-    z-index: 1;
-  }
 
   .container {
     position: relative;
-    z-index: 2;
+    max-width: 1200px;
+    // Keeping padding 0 20px for the container itself,
+    // which effectively acts as the inner spacing for content
+    padding: 0 20px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    overflow: hidden; // Ensures nothing spills out
   }
 
-  .skills-heading {
-    @include section-heading;
-    background: linear-gradient(135deg, $gradient-start, $gradient-end);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    margin-bottom: 20px;
-  }
-
-  .skills-subtitle {
-    text-align: center;
-    color: $text-muted;
-    font-size: 18px;
-    margin-bottom: 60px;
-    font-weight: 300;
-  }
-
-  .skills-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-    gap: 40px;
-    margin-bottom: 80px;
-  }
-
-  .skill-category {
-    @include glassmorphism;
-    padding: 30px;
-    transition: all 0.3s ease;
-    position: relative;
+  .carousel {
+    flex-grow: 1;
     overflow: hidden;
-
-    &::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 2px;
-      background: $skill-progress-bg;
-      transition: left 0.5s ease;
-    }
-
-    &:hover {
-      transform: translateY(-10px);
-      box-shadow: 0 20px 40px rgba(14, 174, 198, 0.2);
-
-      &::before {
-        left: 0;
-      }
-    }
-
-    .category-header {
+    position: relative;
+    // Add horizontal padding to the carousel itself to keep track content
+    // from overlapping with the buttons
+    padding: 0 60px; // Increased padding to make space for buttons
+    box-sizing: border-box; // Include padding in the element's total width
+    
+    &__track {
       display: flex;
-      align-items: center;
-      margin-bottom: 25px;
-      gap: 15px;
-
-      .category-icon {
-        width: 50px;
-        height: 50px;
-        border-radius: 12px;
-        background: $skill-progress-bg;
-        @include flex-center;
-        box-shadow: 0 4px 15px rgba(14, 174, 198, 0.3);
-
-        i {
-          font-size: 22px;
-          color: $text-light;
-        }
-      }
-
-      h3 {
-        font-size: 20px;
-        font-weight: 600;
-        color: $text-light;
-        margin: 0;
-      }
-    }
-
-    .skills-list {
-      display: flex;
-      flex-direction: column;
+      transition: transform 0.5s ease;
       gap: 20px;
     }
 
-    .skill-item {
-      transition: all 0.3s ease;
-
-      &:hover {
-        transform: translateX(10px);
-      }
-
-      .skill-info {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 8px;
-
-        .skill-name {
-          font-size: 14px;
-          font-weight: 500;
-          color: $text-light;
-        }
-
-        .skill-percentage {
-          font-size: 12px;
-          font-weight: 600;
-          color: $primary-color;
-        }
-      }
-
-      .skill-bar {
-        height: 6px;
-        background: $skill-bg;
+    &__item {
+      flex: 0 0 calc(33.333% - 13.333px);
+      min-width: calc(33.333% - 13.333px);
+      height: 300px; 
+      
+      img {
+        width: 100%;
+        height: 100%; 
+        display: block;
         border-radius: 10px;
-        overflow: hidden;
-        position: relative;
-
-        .skill-progress {
-          height: 100%;
-          background: $skill-progress-bg;
-          border-radius: 10px;
-          width: 0;
-          transition: width 1.5s ease;
-          position: relative;
-
-          &::after {
-            content: "";
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 20px;
-            height: 100%;
-            background: linear-gradient(
-              90deg,
-              transparent,
-              rgba(255, 255, 255, 0.3)
-            );
-            animation: shimmer 2s infinite;
-          }
-        }
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        transition: transform 0.3s ease;
+        object-fit: cover; 
       }
-
-      &.animate {
-        .skill-progress {
-          width: var(--width);
-        }
+      
+      &:hover img {
+        transform: scale(1.03); 
       }
     }
   }
 
-  // Skills Summary
-  .skills-summary {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 30px;
-    margin-top: 60px;
-
-    .summary-item {
-      @include glassmorphism;
-      padding: 40px 20px;
-      text-align: center;
-      transition: all 0.3s ease;
-      position: relative;
-
-      &:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 15px 30px rgba(14, 174, 198, 0.2);
-      }
-
-      .summary-number {
-        font-size: 48px;
-        font-weight: 700;
-        background: $skill-progress-bg;
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-        margin-bottom: 10px;
-        position: relative;
-        display: inline-block;
-
-        .percentage-sign {
-          font-size: 24px;
-          margin-left: 2px;
-        }
-      }
-
-      .summary-label {
-        font-size: 14px;
-        color: $text-muted;
-        font-weight: 400;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-      }
-
-      .percentage-sign {
-        font-size: 24px;
-        color: $primary-color;
-        font-weight: 700;
-        margin-left: 2px;
-      }
+  // Carousel Navigation Buttons
+  .carousel__btn {
+    @include flex-center;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.4);
+    color: white;
+    border: none;
+    font-size: 2.5rem;
+    cursor: pointer;
+    z-index: 10;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    
+    &:hover {
+      background: $primary-color;
+      transform: translateY(-50%) scale(1.1);
+    }
+    
+    &.prev {
+      left: 20px; // Offset from the container's left edge
+    }
+    
+    &.next {
+      right: 20px; // Offset from the container's right edge
     }
   }
 }
+
+
+
 
 // Keyframes
 @keyframes shimmer {
