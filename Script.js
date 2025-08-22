@@ -4,12 +4,15 @@ let projects = [];
 let items = [];
 let index = 0;
 
+let autoScrollInterval = null;
+let isAutoScrollPaused = false;
+const autoScrollDelay = 1000; 
+
 const track = document.querySelector(".carousel__track");
 const nextBtn = document.querySelector(".next");
 const prevBtn = document.querySelector(".prev");
 
 document.addEventListener('DOMContentLoaded', function () {
-    // Fade-in animation
     const scrollAnimationOptions = {
         threshold: 0.1,
         rootMargin: "0px 0px -50px 0px"
@@ -26,18 +29,15 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }, scrollAnimationOptions);
 
-    // fade-in elements
     document.querySelectorAll('.fade-in').forEach(el => {
         observer.observe(el);
     });
 
-    // Skills animation
     const skillsSection = document.getElementById('skills');
     if (skillsSection) {
         observer.observe(skillsSection);
     }
 
-    // Smooth scroll
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
             e.preventDefault();
@@ -52,7 +52,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    // Mobile menu
     const menuToggle = document.querySelector('.menu-toggle');
     const navMenu = document.getElementById("nav-menu");
 
@@ -75,7 +74,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // Header text animation
     setTimeout(() => {
         const headerText = document.querySelector('.header-text');
         if (headerText) {
@@ -83,7 +81,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }, 500);
 
-    // Parallax effect
     window.addEventListener('scroll', function () {
         const scrolled = window.pageYOffset;
         const header = document.getElementById('header');
@@ -93,7 +90,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    // Navigation background
     window.addEventListener('scroll', function () {
         const nav = document.querySelector('nav');
         if (window.scrollY > 50) {
@@ -104,18 +100,13 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    // Initialize graphics carousel
     initializeGraphicsCarousel();
-    
-    // Initialize projects carousel
     initializeProjectsCarousel();
 
-    // Remove loading state 
     window.addEventListener('load', function () {
         document.body.classList.remove('loading');
     });
 
-    // Handle window resize
     window.addEventListener('resize', function () {
         const navMenu = document.getElementById("nav-menu");
         if (window.innerWidth > 768 && navMenu && navMenu.classList.contains('active')) {
@@ -124,16 +115,100 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
-// Graphics Carousel Functions
+function startAutoScroll() {
+    if (autoScrollInterval) return;
+    
+    const itemsVisible = getVisibleItemsCount();
+    if (items.length <= itemsVisible) return;
+    
+    autoScrollInterval = setInterval(() => {
+        if (!isAutoScrollPaused) {
+            nextGraphicsSlide();
+        }
+    }, autoScrollDelay);
+}
+
+function stopAutoScroll() {
+    if (autoScrollInterval) {
+        clearInterval(autoScrollInterval);
+        autoScrollInterval = null;
+    }
+}
+
+function pauseAutoScroll() {
+    isAutoScrollPaused = true;
+}
+
+function resumeAutoScroll() {
+    isAutoScrollPaused = false;
+}
+
+function nextGraphicsSlide() {
+    const itemsVisible = getVisibleItemsCount();
+    const maxIndex = Math.max(0, items.length - itemsVisible);
+    
+    index++;
+    if (index > maxIndex) {
+        index = 0;
+    }
+    updateGraphicsCarousel();
+}
+
+function prevGraphicsSlide() {
+    const itemsVisible = getVisibleItemsCount();
+    const maxIndex = Math.max(0, items.length - itemsVisible);
+    
+    index--;
+    if (index < 0) {
+        index = maxIndex;
+    }
+    updateGraphicsCarousel();
+}
+
 async function initializeGraphicsCarousel() {
     try {
         await loadImages();
         if (items.length > 0) {
             setupGraphicsCarouselButtons();
+            setupCarouselHoverEvents();
             updateGraphicsCarousel();
+            setupVisibilityObserver();
         }
     } catch (error) {
         console.error('Failed to initialize graphics carousel:', error);
+    }
+}
+
+function setupVisibilityObserver() {
+    const carouselObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                startAutoScroll();
+            } else {
+                stopAutoScroll();
+            }
+        });
+    }, { threshold: 0.1 });
+    
+    if (track) {
+        carouselObserver.observe(track);
+    }
+}
+
+function setupCarouselHoverEvents() {
+    if (!track) return;
+    
+    track.addEventListener('mouseenter', pauseAutoScroll);
+    track.addEventListener('mouseleave', resumeAutoScroll);
+    
+    if (nextBtn) {
+        nextBtn.addEventListener('mouseenter', pauseAutoScroll);
+        nextBtn.addEventListener('mouseleave', resumeAutoScroll);
+    }
+    
+    if (prevBtn) {
+        prevBtn.addEventListener('mouseenter', pauseAutoScroll);
+        prevBtn.addEventListener('mouseleave', resumeAutoScroll);
     }
 }
 
@@ -145,7 +220,6 @@ async function loadImages() {
         }
         const data = await response.json();
         
-        // Clear existing content
         if (track) {
             track.innerHTML = '';
         }
@@ -163,9 +237,7 @@ async function loadImages() {
             track.appendChild(item);
         });
         
-        // Update items array
         items = document.querySelectorAll(".carousel__item");
-        console.log(`Loaded ${items.length} carousel items`);
         
     } catch (error) {
         console.error("Error loading images:", error);
@@ -179,7 +251,9 @@ function createFallbackCarousel() {
     const fallbackImages = [
         { src: 'Graphics/img1.png', alt: 'Graphics 1' },
         { src: 'Graphics/img2.png', alt: 'Graphics 2' },
-        { src: 'Graphics/img3.png', alt: 'Graphics 3' }
+        { src: 'Graphics/img3.png', alt: 'Graphics 3' },
+        { src: 'Graphics/img4.png', alt: 'Graphics 4' },
+        { src: 'Graphics/img5.png', alt: 'Graphics 5' }
     ];
     
     track.innerHTML = '';
@@ -201,40 +275,28 @@ function createFallbackCarousel() {
 }
 
 function setupGraphicsCarouselButtons() {
-    if (!nextBtn || !prevBtn || items.length === 0) {
-        console.warn('Graphics carousel buttons or items not found');
-        return;
-    }
+    if (!nextBtn || !prevBtn || items.length === 0) return;
     
-    // Next button
     nextBtn.addEventListener("click", () => {
-        const itemsVisible = getVisibleItemsCount();
-        const maxIndex = Math.max(0, items.length - itemsVisible);
-        
-        if (index < maxIndex) {
-            index++;
-            updateGraphicsCarousel();
-        }
+        pauseAutoScroll();
+        nextGraphicsSlide();
+        setTimeout(resumeAutoScroll, 2000);
     });
 
-    // Previous button
     prevBtn.addEventListener("click", () => {
-        if (index > 0) {
-            index--;
-            updateGraphicsCarousel();
-        }
+        pauseAutoScroll();
+        prevGraphicsSlide();
+        setTimeout(resumeAutoScroll, 2000);
     });
-    
-    // Initial setup
+ 
     updateGraphicsCarousel();
 }
 
 function getVisibleItemsCount() {
-    // Determine how many items are visible based on screen size
     const screenWidth = window.innerWidth;
-    if (screenWidth < 768) return 1;      // Mobile: 1 item
-    if (screenWidth < 1024) return 2;     // Tablet: 2 items
-    return 3;                             // Desktop: 3 items
+    if (screenWidth < 768) return 1;     
+    if (screenWidth < 1024) return 2;    
+    return 3;                             
 }
 
 function updateGraphicsCarousel() {
@@ -246,57 +308,45 @@ function updateGraphicsCarousel() {
     
     track.style.transform = `translateX(${offset}%)`;
     
-    // Apply center focus effect only for desktop (3 items visible)
     if (itemsVisible === 3) {
         applyCarouselFocusEffect();
     } else {
-        // Reset all items for mobile/tablet view
         resetCarouselItems();
     }
     
-    // Update button states
     updateGraphicsButtonStates();
 }
 
 function applyCarouselFocusEffect() {
-    // Reset all items first
     items.forEach((item, i) => {
         const img = item.querySelector('img');
         if (img) {
-            // Remove all classes
             item.classList.remove('carousel-center', 'carousel-side');
-            
-            // Reset transforms and opacity
             img.style.transform = 'scale(1)';
             img.style.opacity = '1';
             img.style.transition = 'all 0.5s ease';
         }
     });
     
-    // Apply focus effect based on current index
-    const centerIndex = index + 1; // Middle item in the visible set
+    const centerIndex = index + 1;
     
     items.forEach((item, i) => {
         const img = item.querySelector('img');
         if (!img) return;
         
         if (i >= index && i < index + 3) {
-            // This item is visible
             if (i === centerIndex) {
-                // Center item - scale up
                 item.classList.add('carousel-center');
                 img.style.transform = 'scale(1.15)';
                 img.style.opacity = '1';
                 img.style.zIndex = '10';
             } else {
-                // Side items - fade out slightly
                 item.classList.add('carousel-side');
                 img.style.transform = 'scale(0.95)';
                 img.style.opacity = '0.7';
                 img.style.zIndex = '5';
             }
         } else {
-            // Hidden items
             img.style.transform = 'scale(1)';
             img.style.opacity = '1';
             img.style.zIndex = '1';
@@ -305,7 +355,6 @@ function applyCarouselFocusEffect() {
 }
 
 function resetCarouselItems() {
-    // Reset all transformations for mobile/tablet view
     items.forEach((item) => {
         const img = item.querySelector('img');
         if (img) {
@@ -321,40 +370,33 @@ function resetCarouselItems() {
 function updateGraphicsButtonStates() {
     if (!nextBtn || !prevBtn) return;
     
-    const itemsVisible = getVisibleItemsCount();
-    const maxIndex = Math.max(0, items.length - itemsVisible);
+    prevBtn.disabled = false;
+    prevBtn.style.opacity = '1';
+    prevBtn.style.cursor = 'pointer';
     
-    // Previous button
-    prevBtn.disabled = (index <= 0);
-    prevBtn.style.opacity = (index <= 0) ? '0.5' : '1';
-    prevBtn.style.cursor = (index <= 0) ? 'not-allowed' : 'pointer';
-    
-    // Next button
-    nextBtn.disabled = (index >= maxIndex);
-    nextBtn.style.opacity = (index >= maxIndex) ? '0.5' : '1';
-    nextBtn.style.cursor = (index >= maxIndex) ? 'not-allowed' : 'pointer';
+    nextBtn.disabled = false;
+    nextBtn.style.opacity = '1';
+    nextBtn.style.cursor = 'pointer';
 }
 
-// Projects Carousel Functions
 async function initializeProjectsCarousel() {
     try {
         const data = await loadProjects();
         if (Array.isArray(data) && data.length > 0) {
             projects = data;
         } else {
-            // Fallback projects
             projects = [
                 {
-                    title: "E-Commerce Website",
-                    image: "Assets/project1.jpg"
+                    title: "Eye Tracking WheelChair - IOT, Machine Learning, React, Python, Node js",
+                    image: "Assets/fyp.jpg"
                 },
                 {
-                    title: "Mobile Game App", 
-                    image: "Assets/project2.jpg"
+                    title: "Face Detection - Python, Deep Learning, OpenCV", 
+                    image: "https://miro.medium.com/v2/resize:fit:1200/1*a6kXOpZQ4abIk0EfIkKOpw.jpeg"
                 },
                 {
-                    title: "AI Dashboard",
-                    image: "Assets/project3.jpg"
+                    title: "The Hunter - FPS Game - GD Script and C# using Godot Game Engine",
+                    image: "Assets/the_hunter_fps_game_by_Timothious.png"
                 }
             ];
         }
@@ -442,7 +484,6 @@ function moveCarousel(direction) {
     showSlide(newSlide);
 }
 
-// Utility Functions
 function animateSkillBars() {
     const skillItems = document.querySelectorAll('.skill-item');
     skillItems.forEach((item, index) => {
@@ -503,7 +544,6 @@ function closeMobileMenu() {
     }
 }
 
-// Touch/Swipe Support for Projects
 let startX = 0;
 let endX = 0;
 
@@ -528,14 +568,13 @@ function handleSwipe() {
     
     if (Math.abs(diff) > threshold) {
         if (diff > 0) {
-            moveCarousel(1);  // Swipe left - next
+            moveCarousel(1);
         } else {
-            moveCarousel(-1); // Swipe right - previous
+            moveCarousel(-1);
         }
     }
 }
 
-// Handle window resize for graphics carousel
 window.addEventListener('resize', function() {
     if (items.length > 0) {
         const itemsVisible = getVisibleItemsCount();
@@ -545,4 +584,8 @@ window.addEventListener('resize', function() {
         }
         updateGraphicsCarousel();
     }
+});
+
+window.addEventListener('beforeunload', function() {
+    stopAutoScroll();
 });

@@ -793,8 +793,25 @@ html {
 
 // Projects Section
 #projects {
-  padding: 80px 0;
-  background-color: #2b2e2f;
+  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0f0f0f 100%);
+  padding: 100px 20px;
+  position: relative;
+  overflow: hidden;
+  
+  // Background pattern
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+      radial-gradient(circle at 20% 80%, rgba(14, 174, 198, 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 80% 20%, rgba(20, 184, 204, 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 40% 40%, rgba(14, 174, 198, 0.05) 0%, transparent 50%);
+    pointer-events: none;
+  }
 
   .project-sub-heading {
     @include section-heading;
@@ -950,6 +967,7 @@ html {
 }
 
 // Contact Form
+
 #Contact {
   background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0f0f0f 100%);
   padding: 100px 20px;
@@ -972,7 +990,7 @@ html {
   }
 
   .container {
-    max-width: 1200px;
+    max-width: 800px; 
     margin: 0 auto;
     position: relative;
     z-index: 2;
@@ -1020,29 +1038,33 @@ html {
     .contact-subtitle {
       font-size: 1.3rem;
       color: $text-muted;
-      max-width: 600px;
+      max-width: 700px; // Slightly increased
       margin: 0 auto;
       line-height: 1.6;
     }
   }
 
+  .contact-wrapper {
+    width: 100%;
+    max-width: 1200px; // Expanded from 1000px
+    margin: 0 auto;
+  }
+
   .contact-form {
     @include glassmorphism;
-    padding: 50px 60px;
-    max-width: 1000px;
-    margin: 0 auto;
+    padding: 60px 80px; // Increased horizontal padding
     width: 100%;
     
     form {
       display: flex;
       flex-direction: column;
-      gap: 30px;
+      gap: 35px; // Increased gap
     }
 
     .form-row {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 35px;
+      gap: 40px; // Increased gap
     }
 
     .form-group {
@@ -1056,43 +1078,44 @@ html {
       
       i {
         position: absolute;
-        left: 20px;
+        left: 25px; // Increased left spacing
         color: $primary-color;
-        font-size: 1.1rem;
+        font-size: 1.2rem; // Slightly larger icons
         z-index: 1;
         transition: all 0.3s ease;
       }
       
       &.textarea-container i {
-        top: 20px;
+        top: 25px; // Adjusted for larger padding
         align-self: flex-start;
       }
     }
 
     input, textarea {
       width: 100%;
-      padding: 18px 20px 18px 55px;
+      padding: 22px 25px 22px 65px; // Increased padding
       background: rgba(255, 255, 255, 0.05);
       border: 2px solid rgba(255, 255, 255, 0.1);
-      border-radius: 15px;
-      font-size: 1rem;
+      border-radius: 18px; // Slightly larger border radius
+      font-size: 1.1rem; // Increased font size
       color: $text-light;
       transition: all 0.3s ease;
       backdrop-filter: blur(10px);
       
       &::placeholder {
         color: rgba(204, 204, 204, 0.7);
+        font-size: 1rem;
       }
       
       &:focus {
         outline: none;
         border-color: $primary-color;
         background: rgba(14, 174, 198, 0.1);
-        box-shadow: 0 0 20px rgba(14, 174, 198, 0.2);
+        box-shadow: 0 0 25px rgba(14, 174, 198, 0.25); // Enhanced glow
         
         + i {
           color: $accent-blue;
-          transform: scale(1.1);
+          transform: scale(1.15);
         }
       }
       
@@ -1103,20 +1126,21 @@ html {
 
     textarea {
       resize: vertical;
-      min-height: 120px;
-      padding-top: 20px;
+      min-height: 140px; // Increased height
+      padding-top: 25px;
     }
 
     .btn-primary {
-      @include button_use($primary-color, $text-light, $primary-hover, 18px 30px, 1.1rem, 50px);
+      @include button_use($primary-color, $text-light, $primary-hover, 20px 35px, 1.2rem, 50px);
       position: relative;
       overflow: hidden;
       font-weight: 600;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 12px;
+      gap: 15px;
       box-shadow: 0 15px 35px rgba(14, 174, 198, 0.4);
+      margin-top: 15px; // Added top margin
       
       &::before {
         content: '';
@@ -1148,6 +1172,7 @@ html {
     }
   }
 
+  // Contact info and other elements remain the same...
   .contact-info {
     display: flex;
     flex-direction: column;
@@ -1194,43 +1219,9 @@ html {
         font-size: 1rem;
       }
     }
-    
-    .social-links {
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      margin-top: 20px;
-      
-      .social-link {
-        width: 50px;
-        height: 50px;
-        background: rgba(255, 255, 255, 0.05);
-        border: 2px solid rgba(255, 255, 255, 0.1);
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: $text-muted;
-        text-decoration: none;
-        transition: all 0.3s ease;
-        backdrop-filter: blur(10px);
-        
-        i {
-          font-size: 1.2rem;
-        }
-        
-        &:hover {
-          background: $primary-color;
-          border-color: $primary-color;
-          color: white;
-          transform: translateY(-3px) scale(1.1);
-          box-shadow: 0 10px 25px rgba(14, 174, 198, 0.4);
-        }
-      }
-    }
   }
 
-  // Floating Elements
+  // Floating Elements remain the same...
   .floating-elements {
     position: absolute;
     top: 0;
@@ -1284,72 +1275,6 @@ html {
   }
 }
 
-// Animations
-@keyframes floatIcon {
-  0%, 100% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
-}
-
-@keyframes float {
-  0%, 100% {
-    transform: translateY(0px) rotate(0deg);
-  }
-  33% {
-    transform: translateY(-20px) rotate(120deg);
-  }
-  66% {
-    transform: translateY(10px) rotate(240deg);
-  }
-}
-
-// Animations
-@keyframes floatIcon {
-  0%, 100% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
-}
-
-@keyframes float {
-  0%, 100% {
-    transform: translateY(0px) rotate(0deg);
-  }
-  33% {
-    transform: translateY(-20px) rotate(120deg);
-  }
-  66% {
-    transform: translateY(10px) rotate(240deg);
-  }
-}
-
-// Animations
-@keyframes floatIcon {
-  0%, 100% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
-}
-
-@keyframes float {
-  0%, 100% {
-    transform: translateY(0px) rotate(0deg);
-  }
-  33% {
-    transform: translateY(-20px) rotate(120deg);
-  }
-  66% {
-    transform: translateY(10px) rotate(240deg);
-  }
-}
-
 // Footer
 .footer {
   background-color: $bg-secondary;
@@ -1392,15 +1317,27 @@ html {
 //Responsive
 @media screen and (min-width: 800px) and (max-width: 1280px) {
   body {
-    background-image: url('/Assets/Hero_2.jpg');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
+    background: url('/Assets/Hero_2.jpg');
+    background-attachment: scroll;
   }
 
   .container {
     padding: 0 30px;
+  }
+    #Contact {
+    .contact-form {
+      padding: 50px 60px; // Reduced for medium screens
+      
+      input, textarea {
+        padding: 20px 22px 20px 60px;
+        font-size: 1.05rem;
+      }
+      
+      .btn-primary {
+        padding: 18px 32px;
+        font-size: 1.1rem;
+      }
+    }
   }
 
   #header {
@@ -1444,14 +1381,15 @@ html {
 // Mobile Styles (max-width: 799px)
 @media screen and (max-width: 799px) {
   
-  // Mobile background image override
-  body {
-    background-image: url('/Assets/mobile-background.jpg');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-attachment: scroll; // Better performance on mobile
+  body{
+    #Header{
+      background: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.4)),
+    url("Assets/Hero_2.jpg");
+
+    }
+
   }
+
 
   #experience {
     padding: 60px 0;
@@ -1716,33 +1654,12 @@ html {
   #Contact {
     padding: 80px 20px;
     
-    .contact-header {
-      margin-bottom: 40px;
-      
-      .contact-icon {
-        width: 70px;
-        height: 70px;
-        margin-bottom: 25px;
-        
-        i {
-          font-size: 1.8rem;
-        }
-      }
-      
-      .contact-heading {
-        font-size: 2.5rem;
-        margin-bottom: 15px;
-      }
-      
-      .contact-subtitle {
-        font-size: 1.1rem;
-        padding: 0 10px;
-      }
+    .contact-wrapper {
+      max-width: 100%;
     }
     
     .contact-form {
       padding: 40px 35px;
-      max-width: 95%;
       
       form {
         gap: 25px;
@@ -1753,24 +1670,21 @@ html {
         gap: 25px;
       }
       
-      .form-group {
-        margin-bottom: 0;
-      }
-      
       input, textarea {
-        padding: 16px 16px 16px 50px;
-        font-size: 0.95rem;
+        padding: 18px 18px 18px 55px;
+        font-size: 1rem;
+        border-radius: 15px;
       }
       
       textarea {
-        min-height: 100px;
-        padding-top: 18px;
+        min-height: 120px;
+        padding-top: 20px;
       }
       
       .btn-primary {
-        padding: 16px 28px;
-        font-size: 1rem;
-        gap: 10px;
+        padding: 18px 30px;
+        font-size: 1.05rem;
+        gap: 12px;
       }
     }
   }
@@ -1813,11 +1727,8 @@ html {
 }
 
 @media screen and (max-width: 480px) {
-  
-  // Small mobile background image
-  body {
-    background-image: url('/Assets/mobile-small-background.jpg');
-  }
+
+
     #experience {
     padding: 50px 0;
 
@@ -1992,71 +1903,31 @@ html {
   #Contact {
     padding: 60px 15px;
     
-    .contact-header {
-      margin-bottom: 35px;
-      
-      .contact-icon {
-        width: 60px;
-        height: 60px;
-        margin-bottom: 20px;
-        
-        i {
-          font-size: 1.5rem;
-        }
-      }
-      
-      .contact-heading {
-        font-size: 2rem;
-        margin-bottom: 12px;
-      }
-      
-      .contact-subtitle {
-        font-size: 1rem;
-        padding: 0 5px;
-      }
-    }
-    
     .contact-form {
       padding: 30px 25px;
-      max-width: 100%;
-      margin: 0 auto;
-      
-      form {
-        gap: 20px;
-      }
-      
-      .form-row {
-        gap: 20px;
-        grid-template-columns: 1fr;
-      }
       
       .input-container {
         i {
-          left: 15px;
-          font-size: 1rem;
-        }
-        
-        &.textarea-container i {
-          top: 18px;
+          left: 18px;
+          font-size: 1.1rem;
         }
       }
       
       input, textarea {
-        padding: 15px 15px 15px 45px;
-        font-size: 0.9rem;
+        padding: 16px 16px 16px 50px;
+        font-size: 0.95rem;
         border-radius: 12px;
       }
       
       textarea {
-        min-height: 90px;
-        padding-top: 16px;
+        min-height: 100px;
+        padding-top: 18px;
       }
       
       .btn-primary {
-        padding: 15px 25px;
-        font-size: 0.95rem;
-        gap: 8px;
-        border-radius: 40px;
+        padding: 16px 28px;
+        font-size: 1rem;
+        gap: 10px;
       }
     }
   }
@@ -2088,12 +1959,6 @@ html {
 @media screen and (max-width: 320px) {
   
   // Extra small mobile background
-  body {
-    background-image: url('/Assets/mobile-extra-small-background.jpg');
-    background-attachment: scroll;
-  }
-
-  // Extra Small Mobile Graphics Section
   #graphics {
     padding: 40px 0;
     
