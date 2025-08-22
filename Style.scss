@@ -1291,10 +1291,70 @@ html {
     margin-top: 10px;
   }
 }
-
 //Responsive
-@media screen and (max-width: 768px) {
+@media screen and (min-width: 800px) and (max-width: 1280px) {
+  body {
+    background-image: url('/Assets/Hero_2.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+  }
+
+  .container {
+    padding: 0 30px;
+  }
+
+  #header {
+    .header-text {
+      h1 {
+        font-size: 48px;
+      }
+
+      p {
+        font-size: 20px;
+      }
+    }
+  }
+
+  #graphics {
+    padding: 70px 0;
+    
+    .carousel {
+      padding: 0 60px;
+      
+      &__item {
+        height: 280px;
+      }
+    }
+  }
+
+  #skills {
+    .skills-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 30px;
+    }
+  }
+
+  #projects {
+    .project-card {
+      height: 400px;
+    }
+  }
+}
+
+// Mobile Styles (max-width: 799px)
+@media screen and (max-width: 799px) {
   
+  // Mobile background image override
+  body {
+    background-image: url('/Assets/mobile-background.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: scroll; // Better performance on mobile
+  }
+
   .container {
     padding: 0 15px;
   }
@@ -1625,6 +1685,11 @@ html {
 
 @media screen and (max-width: 480px) {
   
+  // Small mobile background image
+  body {
+    background-image: url('/Assets/mobile-small-background.jpg');
+  }
+
   #graphics {
     padding: 50px 0;
     
@@ -1863,6 +1928,12 @@ html {
 // Additional Mobile Screens
 @media screen and (max-width: 320px) {
   
+  // Extra small mobile background
+  body {
+    background-image: url('/Assets/mobile-extra-small-background.jpg');
+    background-attachment: scroll;
+  }
+
   // Extra Small Mobile Graphics Section
   #graphics {
     padding: 40px 0;
