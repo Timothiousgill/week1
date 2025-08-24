@@ -124,7 +124,7 @@ html {
   background-attachment: fixed;
   @media screen and (max-width: 1024px) {
     background: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.4)),
-      url("Assets/Hero_3.png");
+      url("Assets/Hero_2.png");
     background-size: cover;
     background-position: right center;
     background-repeat: no-repeat;
@@ -337,11 +337,109 @@ html {
   }
 }
 
+// Experience Section
+#experience {
+  padding: 80px 0;
+  background-color: #262626;
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  .experience-sub-heading {
+    @include section-heading;
+    color: $text-light;
+    margin-bottom: 20px;
+  }
+
+  p {
+    text-align: center;
+    color: $text-muted;
+    font-size: 18px;
+    margin-bottom: 60px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .experience-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .experience-card {
+    @include glassmorphism;
+    padding: 50px 60px;
+    text-align: center;
+    transition: all 0.3s ease;
+    width: 100%;
+    max-width: 500px;
+
+    &:hover {
+      transform: translateY(-5px);
+      box-shadow: 
+        0 20px 40px rgba(0, 0, 0, 0.3),
+        0 0 20px rgba(14, 174, 198, 0.1);
+    }
+
+    .experience-info {
+      h3 {
+        font-size: 28px;
+        font-weight: 600;
+        color: $text-light;
+        margin-bottom: 10px;
+        line-height: 1.3;
+      }
+
+      h4 {
+        font-size: 20px;
+        font-weight: 500;
+        color: $primary-color;
+        margin-bottom: 15px;
+      }
+
+      .duration {
+        display: inline-block;
+        font-size: 16px;
+        color: $text-muted;
+        background: rgba(255, 255, 255, 0.05);
+        padding: 8px 16px;
+        border-radius: 20px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+      }
+    }
+  }
+}
+
+// Pulse animation for timeline dots
+@keyframes pulse {
+  0% {
+    box-shadow: 
+      0 0 20px rgba(14, 174, 198, 0.4),
+      inset 0 2px 4px rgba(255, 255, 255, 0.2);
+  }
+  50% {
+    box-shadow: 
+      0 0 30px rgba(14, 174, 198, 0.6),
+      inset 0 2px 4px rgba(255, 255, 255, 0.3);
+  }
+  100% {
+    box-shadow: 
+      0 0 20px rgba(14, 174, 198, 0.4),
+      inset 0 2px 4px rgba(255, 255, 255, 0.2);
+  }
+}
+
 
 // Skills Section
 #skills {
   padding: 80px 0;
-  background: linear-gradient(135deg, $bg-dark 0%, $bg-secondary 50%, $bg-dark 100%);
+  background: linear-gradient(180deg, $bg-dark 0%, #111111 25%, $bg-secondary 50%, #151515 75%, #0f0f0f 100%);
   position: relative;
   overflow: hidden;
 
@@ -496,103 +594,179 @@ html {
   }
 }
 
-
-// Experience Section
-#experience {
-  padding: 80px 0;
-  background-color: #262626;
-
-  .container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
+// Projects Section
+#projects {
+  background: linear-gradient(180deg, #0f0f0f 0%, #0c0c0c 25%, #0a0a0a 50%, #0d0d0d 75%, #111111 100%);
+  padding: 100px 20px;
+  position: relative;
+  overflow: hidden;
+  
+  // Background pattern
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+      radial-gradient(circle at 20% 80%, rgba(14, 174, 198, 0.08) 0%, transparent 50%),
+      radial-gradient(circle at 80% 20%, rgba(20, 184, 204, 0.08) 0%, transparent 50%),
+      radial-gradient(circle at 40% 40%, rgba(14, 174, 198, 0.04) 0%, transparent 50%);
+    pointer-events: none;
   }
 
-  .experience-sub-heading {
+  .project-sub-heading {
     @include section-heading;
-    color: $text-light;
-    margin-bottom: 20px;
   }
 
   p {
     text-align: center;
     color: $text-muted;
-    font-size: 18px;
-    margin-bottom: 60px;
-    max-width: 600px;
-    margin-left: auto;
-    margin-right: auto;
+    margin-bottom: 40px;
+    font-size: 16px;
   }
 
-  .experience-content {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    max-width: 800px;
-    margin: 0 auto;
-  }
-
-  .experience-card {
-    @include glassmorphism;
-    padding: 50px 60px;
-    text-align: center;
-    transition: all 0.3s ease;
-    width: 100%;
+  // Carousel Container
+  .carousel-container {
+    position: relative;
     max-width: 500px;
+    margin: 0 auto;
+    padding: 20px;
+  }
 
-    &:hover {
-      transform: translateY(-5px);
-      box-shadow: 
-        0 20px 40px rgba(0, 0, 0, 0.3),
-        0 0 20px rgba(14, 174, 198, 0.1);
+  .carousel-wrapper {
+    overflow: hidden;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  }
+
+  .project-carousel {
+    display: flex;
+    transition: transform 0.5s ease;
+  }
+
+  .project-card {
+    min-width: 100%;
+    background: #222;
+    position: relative;
+    height: 400px;
+
+    img {
+      width: 100%;
+      height: 250px;
+      object-fit: cover;
+      border-radius: 15px 15px 0 0;
     }
 
-    .experience-info {
+    .project-content {
+      padding: 20px;
+      height: 150px;
+      @include flex-center;
+      flex-direction: column;
+      text-align: center;
+
       h3 {
-        font-size: 28px;
-        font-weight: 600;
+        font-size: 18px;
         color: $text-light;
-        margin-bottom: 10px;
-        line-height: 1.3;
+        font-weight: 600;
+        line-height: 1.4;
+      }
+    }
+  }
+
+  // Carousel Navigation
+  .carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: $primary-color;
+    color: $text-light;
+    font-size: 22px;
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    z-index: 10;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(14, 174, 198, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &.prev-btn {
+      left: -25px;
+    }
+
+    &.next-btn {
+      right: -25px;
+    }
+
+    &:hover {
+      background: $primary-hover;
+      transform: translateY(-50%) scale(1.1);
+      box-shadow: 0 8px 18px rgba(14, 174, 198, 0.4);
+    }
+  }
+
+  // Carousel Dots
+  .carousel-dots {
+    @include flex-center;
+    gap: 10px;
+    margin-top: 20px;
+
+    .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: $text-gray;
+      cursor: pointer;
+      transition: background 0.3s ease;
+
+      &.active {
+        background: $primary-color;
       }
 
-      h4 {
-        font-size: 20px;
-        font-weight: 500;
-        color: $primary-color;
-        margin-bottom: 15px;
+      &:hover {
+        background: $primary-color;
       }
+    }
+  }
 
-      .duration {
-        display: inline-block;
-        font-size: 16px;
-        color: $text-muted;
-        background: rgba(255, 255, 255, 0.05);
-        padding: 8px 16px;
-        border-radius: 20px;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-      }
+  // Contact Button
+  .contact-btn-container {
+    @include flex-center;
+    margin-top: 40px;
+  }
+
+  .contact-btn {
+    @include button-style($primary-color, $text-light, 15px 30px);
+    font-size: 18px;
+    border-radius: 25px;
+
+    &:hover {
+      background-color: $primary-hover;
     }
   }
 }
 
-// Pulse animation for timeline dots
-@keyframes pulse {
-  0% {
-    box-shadow: 
-      0 0 20px rgba(14, 174, 198, 0.4),
-      inset 0 2px 4px rgba(255, 255, 255, 0.2);
+// Animation Classes
+.fade-in {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+
+  &.visible {
+    opacity: 1;
+    transform: translateY(0);
   }
-  50% {
-    box-shadow: 
-      0 0 30px rgba(14, 174, 198, 0.6),
-      inset 0 2px 4px rgba(255, 255, 255, 0.3);
-  }
-  100% {
-    box-shadow: 
-      0 0 20px rgba(14, 174, 198, 0.4),
-      inset 0 2px 4px rgba(255, 255, 255, 0.2);
-  }
+}
+
+// Loading States
+.loading {
+  opacity: 0.6;
+  pointer-events: none;
 }
 
 //  Graphics
@@ -797,181 +971,6 @@ html {
     opacity: 1;
     transform: scale(1);
   }
-}
-
-// Projects Section
-#projects {
-  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0f0f0f 100%);
-  padding: 100px 20px;
-  position: relative;
-  overflow: hidden;
-  
-  // Background pattern
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: 
-      radial-gradient(circle at 20% 80%, rgba(14, 174, 198, 0.1) 0%, transparent 50%),
-      radial-gradient(circle at 80% 20%, rgba(20, 184, 204, 0.1) 0%, transparent 50%),
-      radial-gradient(circle at 40% 40%, rgba(14, 174, 198, 0.05) 0%, transparent 50%);
-    pointer-events: none;
-  }
-
-  .project-sub-heading {
-    @include section-heading;
-  }
-
-  p {
-    text-align: center;
-    color: $text-muted;
-    margin-bottom: 40px;
-    font-size: 16px;
-  }
-
-  // Carousel Container
-  .carousel-container {
-    position: relative;
-    max-width: 500px;
-    margin: 0 auto;
-    padding: 20px;
-  }
-
-  .carousel-wrapper {
-    overflow: hidden;
-    border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-  }
-
-  .project-carousel {
-    display: flex;
-    transition: transform 0.5s ease;
-  }
-
-  .project-card {
-    min-width: 100%;
-    background: #222;
-    position: relative;
-    height: 400px;
-
-    img {
-      width: 100%;
-      height: 250px;
-      object-fit: cover;
-      border-radius: 15px 15px 0 0;
-    }
-
-    .project-content {
-      padding: 20px;
-      height: 150px;
-      @include flex-center;
-      flex-direction: column;
-      text-align: center;
-
-      h3 {
-        font-size: 18px;
-        color: $text-light;
-        font-weight: 600;
-        line-height: 1.4;
-      }
-    }
-  }
-
-  // Carousel Navigation
-  .carousel-btn {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: $primary-color;
-    color: $text-light;
-    font-size: 22px;
-    border: none;
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    z-index: 10;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 12px rgba(14, 174, 198, 0.3);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    &.prev-btn {
-      left: -25px;
-    }
-
-    &.next-btn {
-      right: -25px;
-    }
-
-    &:hover {
-      background: $primary-hover;
-      transform: translateY(-50%) scale(1.1);
-      box-shadow: 0 8px 18px rgba(14, 174, 198, 0.4);
-    }
-  }
-
-  // Carousel Dots
-  .carousel-dots {
-    @include flex-center;
-    gap: 10px;
-    margin-top: 20px;
-
-    .dot {
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-      background: $text-gray;
-      cursor: pointer;
-      transition: background 0.3s ease;
-
-      &.active {
-        background: $primary-color;
-      }
-
-      &:hover {
-        background: $primary-color;
-      }
-    }
-  }
-
-  // Contact Button
-  .contact-btn-container {
-    @include flex-center;
-    margin-top: 40px;
-  }
-
-  .contact-btn {
-    @include button-style($primary-color, $text-light, 15px 30px);
-    font-size: 18px;
-    border-radius: 25px;
-
-    &:hover {
-      background-color: $primary-hover;
-    }
-  }
-}
-
-// Animation Classes
-.fade-in {
-  opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
-
-  &.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-// Loading States
-.loading {
-  opacity: 0.6;
-  pointer-events: none;
 }
 
 // Contact Form

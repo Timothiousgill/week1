@@ -84,19 +84,39 @@ document.addEventListener('DOMContentLoaded', function () {
     window.addEventListener('scroll', function () {
         const scrolled = window.pageYOffset;
         const header = document.getElementById('header');
-        if (header) {
-            const rate = scrolled * -0.5;
-            header.style.transform = `translate3d(0, ${rate}px, 0)`;
-        }
-    });
-
-    window.addEventListener('scroll', function () {
         const nav = document.querySelector('nav');
-        if (window.scrollY > 50) {
-            nav.style.backdropFilter = 'blur(10px)';
-        } else {
-            nav.style.background = 'transparent';
-            nav.style.backdropFilter = 'none';
+        
+        if (header) {
+            const rate = scrolled * -0.3;
+            header.style.transform = `translateY(${rate}px)`;
+        }
+        
+        const parallaxElements = document.querySelectorAll('.skill-card, .experience-card, .project-card');
+        parallaxElements.forEach(element => {
+            const rect = element.getBoundingClientRect();
+            const elementTop = rect.top;
+            const elementHeight = rect.height;
+            const windowHeight = window.innerHeight;
+            
+            if (elementTop < windowHeight && elementTop + elementHeight > 0) {
+                const speed = (elementTop - windowHeight) * 0.1;
+                element.style.transform = `translateY(${speed}px)`;
+            }
+        });
+        
+        if (nav) {
+            if (window.scrollY > 50) {
+                nav.style.background = 'rgba(8, 8, 8, 0.95)';
+                nav.style.backdropFilter = 'blur(15px)';
+                nav.style.borderBottom = '1px solid rgba(14, 174, 198, 0.2)';
+                nav.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.3)';
+                nav.style.transition = 'all 0.3s ease';
+            } else {
+                nav.style.background = 'transparent';
+                nav.style.backdropFilter = 'none';
+                nav.style.borderBottom = 'none';
+                nav.style.boxShadow = 'none';
+            }
         }
     });
 
@@ -115,7 +135,6 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
-// Skills functionality
 async function initializeSkills() {
     try {
         const response = await fetch('skills.json');
@@ -225,8 +244,7 @@ function animateSkillBars(skillCard) {
 function startAutoScroll() {
     if (autoScrollInterval) return;
     
-    const itemsVisible = getVisibleItemsCount();
-    if (items.length <= itemsVisible) return;
+    if (items.length === 0) return;
     
     autoScrollInterval = setInterval(() => {
         if (!isAutoScrollPaused) {
@@ -251,24 +269,60 @@ function resumeAutoScroll() {
 }
 
 function nextGraphicsSlide() {
-    const itemsVisible = getVisibleItemsCount();
-    const maxIndex = Math.max(0, items.length - itemsVisible);
+    if (items.length === 0) return;
     
-    index++;
-    if (index > maxIndex) {
-        index = 0;
+    const itemsVisible = getVisibleItemsCount();
+    
+    if (itemsVisible === 1) {
+        index++;
+        if (index >= items.length) {
+            index = 0;
+        }
+    } else {
+        const maxIndex = items.length - itemsVisible;
+        
+        if (maxIndex <= 0) {
+            index++;
+            if (index >= items.length) {
+                index = 0;
+            }
+        } else {
+            index++;
+            if (index > maxIndex) {
+                index = 0;
+            }
+        }
     }
+    
     updateGraphicsCarousel();
 }
 
 function prevGraphicsSlide() {
-    const itemsVisible = getVisibleItemsCount();
-    const maxIndex = Math.max(0, items.length - itemsVisible);
+    if (items.length === 0) return;
     
-    index--;
-    if (index < 0) {
-        index = maxIndex;
+    const itemsVisible = getVisibleItemsCount();
+    
+    if (itemsVisible === 1) {
+        index--;
+        if (index < 0) {
+            index = items.length - 1;
+        }
+    } else {
+        const maxIndex = items.length - itemsVisible;
+        
+        if (maxIndex <= 0) {
+            index--;
+            if (index < 0) {
+                index = items.length - 1;
+            }
+        } else {
+            index--;
+            if (index < 0) {
+                index = maxIndex;
+            }
+        }
     }
+    
     updateGraphicsCarousel();
 }
 
@@ -387,13 +441,13 @@ function setupGraphicsCarouselButtons() {
     nextBtn.addEventListener("click", () => {
         pauseAutoScroll();
         nextGraphicsSlide();
-        setTimeout(resumeAutoScroll, 2000);
+        setTimeout(resumeAutoScroll, 3000);
     });
 
     prevBtn.addEventListener("click", () => {
         pauseAutoScroll();
         prevGraphicsSlide();
-        setTimeout(resumeAutoScroll, 2000);
+        setTimeout(resumeAutoScroll, 3000);
     });
  
     updateGraphicsCarousel();
@@ -425,40 +479,44 @@ function updateGraphicsCarousel() {
 }
 
 function applyCarouselFocusEffect() {
-    items.forEach((item, i) => {
+    items.forEach((item) => {
         const img = item.querySelector('img');
         if (img) {
             item.classList.remove('carousel-center', 'carousel-side');
             img.style.transform = 'scale(1)';
             img.style.opacity = '1';
             img.style.transition = 'all 0.5s ease';
+            img.style.zIndex = '1';
         }
     });
     
-    const centerIndex = index + 1;
+    const itemsVisible = getVisibleItemsCount();
     
-    items.forEach((item, i) => {
-        const img = item.querySelector('img');
-        if (!img) return;
+    if (itemsVisible === 3) {
+        const centerIndex = index + 1;
         
-        if (i >= index && i < index + 3) {
+        for (let i = index; i < index + 3 && i < items.length; i++) {
+            const item = items[i];
+            const img = item.querySelector('img');
+            
+            if (!img) continue;
+            
             if (i === centerIndex) {
                 item.classList.add('carousel-center');
                 img.style.transform = 'scale(1.15)';
                 img.style.opacity = '1';
                 img.style.zIndex = '10';
+                img.style.boxShadow = '0 15px 35px rgba(14, 174, 198, 0.4)';
+                img.style.border = '2px solid rgba(14, 174, 198, 0.3)';
             } else {
                 item.classList.add('carousel-side');
                 img.style.transform = 'scale(0.95)';
                 img.style.opacity = '0.7';
                 img.style.zIndex = '5';
+                img.style.filter = 'brightness(0.8)';
             }
-        } else {
-            img.style.transform = 'scale(1)';
-            img.style.opacity = '1';
-            img.style.zIndex = '1';
         }
-    });
+    }
 }
 
 function resetCarouselItems() {
@@ -470,6 +528,9 @@ function resetCarouselItems() {
             img.style.opacity = '1';
             img.style.zIndex = '1';
             img.style.transition = 'all 0.3s ease';
+            img.style.boxShadow = '';
+            img.style.border = '';
+            img.style.filter = '';
         }
     });
 }
@@ -676,10 +737,18 @@ function handleSwipe() {
 window.addEventListener('resize', function() {
     if (items.length > 0) {
         const itemsVisible = getVisibleItemsCount();
-        const maxIndex = Math.max(0, items.length - itemsVisible);
-        if (index > maxIndex) {
-            index = maxIndex;
+        
+        if (itemsVisible === 1) {
+            if (index >= items.length) {
+                index = 0;
+            }
+        } else {
+            const maxIndex = Math.max(0, items.length - itemsVisible);
+            if (index > maxIndex) {
+                index = maxIndex;
+            }
         }
+        
         updateGraphicsCarousel();
     }
 });
