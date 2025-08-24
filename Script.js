@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', function () {
             if (entry.isIntersecting) {
                 entry.target.classList.add('visible');
                 if (entry.target.id === 'skills') {
-                    setTimeout(() => animateSkillBars(), 500);
+                    setTimeout(() => initializeSkills(), 500);
                 }
             }
         });
@@ -114,6 +114,113 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 });
+
+// Skills functionality
+async function initializeSkills() {
+    try {
+        const response = await fetch('skills.json');
+        if (!response.ok) {
+            throw new Error('Failed to load skills data');
+        }
+        const skillsData = await response.json();
+        
+        createSkillsGrid(skillsData);
+        setupSkillAnimations();
+    } catch (error) {
+        console.error('Error loading skills:', error);
+        createFallbackSkills();
+    }
+}
+
+function createSkillsGrid(skillsData) {
+    const skillsWrapper = document.querySelector('.skills-wrapper');
+    if (!skillsWrapper) return;
+    
+    skillsWrapper.innerHTML = '';
+    
+    skillsData.forEach(category => {
+        const skillCard = document.createElement('div');
+        skillCard.className = 'skill-card';
+        
+        skillCard.innerHTML = `
+            <div class="skill-icon">
+                <i class="${category.icon}"></i>
+            </div>
+            <h3>${category.title}</h3>
+            <div class="skills-list">
+                ${category.skills.map(skill => `
+                    <div class="skill-item">
+                        <div class="skill-info">
+                            <span class="skill-name">${skill.name}</span>
+                            <span class="skill-percentage">${skill.level}%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" style="width: 0%" data-width="${skill.level}%"></div>
+                        </div>
+                    </div>
+                `).join('')}
+            </div>
+        `;
+        
+        skillsWrapper.appendChild(skillCard);
+    });
+}
+
+function createFallbackSkills() {
+    const skillsWrapper = document.querySelector('.skills-wrapper');
+    if (!skillsWrapper) return;
+    
+    const fallbackSkills = [
+        {
+            id: "frontend",
+            title: "Frontend Development",
+            icon: "fas fa-code",
+            skills: [
+                { name: "HTML5 & CSS3", level: 90 },
+                { name: "JavaScript", level: 85 },
+                { name: "React.js", level: 82 }
+            ]
+        },
+        {
+            id: "backend",
+            title: "Backend Development", 
+            icon: "fas fa-server",
+            skills: [
+                { name: "Python", level: 92 },
+                { name: "Django", level: 82 },
+                { name: "MySQL", level: 78 }
+            ]
+        }
+    ];
+    
+    createSkillsGrid(fallbackSkills);
+}
+
+function setupSkillAnimations() {
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                animateSkillBars(entry.target);
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.5 });
+    
+    document.querySelectorAll('.skill-card').forEach(card => {
+        observer.observe(card);
+    });
+}
+
+function animateSkillBars(skillCard) {
+    const progressBars = skillCard.querySelectorAll('.skill-progress');
+    
+    progressBars.forEach((bar, index) => {
+        setTimeout(() => {
+            const targetWidth = bar.getAttribute('data-width');
+            bar.style.width = targetWidth;
+        }, index * 100);
+    });
+}
 
 function startAutoScroll() {
     if (autoScrollInterval) return;
@@ -482,15 +589,6 @@ function moveCarousel(direction) {
         newSlide = 0;
     }
     showSlide(newSlide);
-}
-
-function animateSkillBars() {
-    const skillItems = document.querySelectorAll('.skill-item');
-    skillItems.forEach((item, index) => {
-        setTimeout(() => {
-            item.classList.add('animate');
-        }, index * 100);
-    });
 }
 
 function toggleMobileMenu() {

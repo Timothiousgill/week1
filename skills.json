@@ -1,68 +1,68 @@
 [
-    {
-      "id": "frontend",
-      "title": "Frontend Development",
-      "icon": "fas fa-code",
-      "skills": [
-        { "name": "HTML5 & CSS3", "level": 95 },
-        { "name": "JavaScript", "level": 90 },
-        { "name": "React.js", "level": 85 },
-        { "name": "SCSS/Sass", "level": 88 }
-      ]
-    },
-    {
-      "id": "backend",
-      "title": "Backend Development", 
-      "icon": "fas fa-server",
-      "skills": [
-        { "name": "Node.js", "level": 87 },
-        { "name": "Python", "level": 82 },
-        { "name": "MongoDB", "level": 80 },
-        { "name": "Express.js", "level": 78 }
-      ]
-    },
-    {
-      "id": "gamedev",
-      "title": "Game Development",
-      "icon": "fas fa-gamepad", 
-      "skills": [
-        { "name": "Unity 3D", "level": 83 },
-        { "name": "C#", "level": 75 },
-        { "name": "Three.js", "level": 80 },
-        { "name": "Blender", "level": 72 }
-      ]
-    },
-    {
-      "id": "ai",
-      "title": "AI & Machine Learning",
-      "icon": "fas fa-brain",
-      "skills": [
-        { "name": "TensorFlow", "level": 85 },
-        { "name": "PyTorch", "level": 82 },
-        { "name": "Pandas & NumPy", "level": 78 },
-        { "name": "OpenCV", "level": 76 }
-      ]
-    },
-    {
-      "id": "design",
-      "title": "Design & Creative",
-      "icon": "fas fa-palette",
-      "skills": [
-        { "name": "Adobe Creative Suite", "level": 92 },
-        { "name": "Figma", "level": 88 },
-        { "name": "UI/UX Design", "level": 90 },
-        { "name": "Motion Graphics", "level": 85 }
-      ]
-    },
-    {
-      "id": "tools",
-      "title": "Tools & Technologies",
-      "icon": "fas fa-tools",
-      "skills": [
-        { "name": "Git & GitHub", "level": 90 },
-        { "name": "Docker", "level": 85 },
-        { "name": "AWS Services", "level": 82 },
-        { "name": "VS Code", "level": 87 }
-      ]
-    }
-  ]
+  {
+    "id": "frontend",
+    "title": "Frontend Development",
+    "icon": "fas fa-code",
+    "skills": [
+      { "name": "HTML5 & CSS3", "level": 90 },
+      { "name": "JavaScript", "level": 85 },
+      { "name": "React.js", "level": 82 },
+      { "name": "WordPress", "level": 80 }
+    ]
+  },
+  {
+    "id": "backend",
+    "title": "Backend Development",
+    "icon": "fas fa-server",
+    "skills": [
+      { "name": "Python (OOP)", "level": 92 },
+      { "name": "Django", "level": 82 },
+      { "name": "MySQL", "level": 78 },
+      { "name": "C++", "level": 75 }
+    ]
+  },
+  {
+    "id": "webscraping",
+    "title": "Web Scraping & Data",
+    "icon": "fas fa-database",
+    "skills": [
+      { "name": "Scrapy", "level": 90 },
+      { "name": "BeautifulSoup", "level": 85 },
+      { "name": "Data Extraction", "level": 88 },
+      { "name": "Google Colab", "level": 80 }
+    ]
+  },
+  {
+    "id": "gamedev",
+    "title": "Game Development",
+    "icon": "fas fa-gamepad",
+    "skills": [
+      { "name": "Godot (C# & GDScript)", "level": 83 },
+      { "name": "C#", "level": 78 },
+      { "name": "Unity (Basics)", "level": 70 },
+      { "name": "Game Mechanics Design", "level": 76 }
+    ]
+  },
+  {
+    "id": "ai",
+    "title": "AI & Machine Learning",
+    "icon": "fas fa-brain",
+    "skills": [
+      { "name": "TensorFlow", "level": 80 },
+      { "name": "Deep Learning", "level": 82 },
+      { "name": "OpenCV", "level": 75 },
+      { "name": "Chatbot Development (React + Django)", "level": 78 }
+    ]
+  },
+  {
+    "id": "tools",
+    "title": "Tools & Technologies",
+    "icon": "fas fa-tools",
+    "skills": [
+      { "name": "Git & GitHub", "level": 90 },
+      { "name": "Netlify", "level": 80 },
+      { "name": "MS Office Suite", "level": 85 },
+      { "name": "VS Code", "level": 87 }
+    ]
+  }
+]
